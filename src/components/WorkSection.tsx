@@ -107,16 +107,16 @@ export default function WorkSection() {
           className="relative overflow-hidden min-h-[520px] flex flex-col justify-end p-10 md:p-16"
           style={{
             background: 'linear-gradient(135deg, #050505 0%, #0a0f08 100%)',
-            border: '1px solid rgba(244,241,234,0.06)',
+            border: '1px solid rgba(244,241,234,0.12)',
           }}
         >
           {/* Map grid lines */}
           <div className="absolute inset-0 overflow-hidden">
             {[20, 40, 60, 80].map(p => (
-              <div key={p} className="absolute" style={{ top: `${p}%`, left: 0, right: 0, height: '1px', background: 'rgba(244,241,234,0.035)' }} />
+              <div key={p} className="absolute" style={{ top: `${p}%`, left: 0, right: 0, height: '1px', background: 'rgba(244,241,234,0.06)' }} />
             ))}
             {[20, 40, 60, 80].map(p => (
-              <div key={p} className="absolute" style={{ left: `${p}%`, top: 0, bottom: 0, width: '1px', background: 'rgba(244,241,234,0.035)' }} />
+              <div key={p} className="absolute" style={{ left: `${p}%`, top: 0, bottom: 0, width: '1px', background: 'rgba(244,241,234,0.06)' }} />
             ))}
           </div>
 

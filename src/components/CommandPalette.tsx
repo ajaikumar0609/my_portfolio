@@ -53,8 +53,17 @@ export default function CommandPalette() {
       }
       if (e.key === 'Escape') setOpen(false)
     }
+    const openHandler = () => {
+      setOpen(true)
+      setQuery('')
+      setActiveIndex(0)
+    }
     document.addEventListener('keydown', handler)
-    return () => document.removeEventListener('keydown', handler)
+    document.addEventListener('open-palette', openHandler)
+    return () => {
+      document.removeEventListener('keydown', handler)
+      document.removeEventListener('open-palette', openHandler)
+    }
   }, [])
 
   useEffect(() => {

@@ -10,16 +10,17 @@ import StatusStrip from '@/components/StatusStrip'
 import WorkSection from '@/components/WorkSection'
 import About from '@/components/About'
 import Contact from '@/components/Contact'
+import SystemHealth from '@/components/SystemHealth'
 
 const SkillsOrbit = dynamic(() => import('@/components/SkillsOrbit'), { ssr: false })
 const ExperienceTimeline = dynamic(() => import('@/components/ExperienceTimeline'), { ssr: false })
 const CommandPalette = dynamic(() => import('@/components/CommandPalette'), { ssr: false })
+const ProofSection = dynamic(() => import('@/components/ProofSection'), { ssr: false })
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    // Initialize Lenis smooth scroll
     let lenis: { raf: (time: number) => void; destroy: () => void } | null = null
     let rafId: number
 
@@ -58,10 +59,12 @@ export default function Home() {
         }}
       >
         <Navbar />
+        <SystemHealth />
         <main>
           <Hero />
           <StatusStrip />
           <WorkSection />
+          <ProofSection />
           <SkillsOrbit />
           <About />
           <ExperienceTimeline />
@@ -78,12 +81,12 @@ export default function Home() {
             fontSize: '9px',
             letterSpacing: '0.15em',
             color: 'rgba(244,241,234,0.2)',
-            background: 'rgba(244,241,234,0.04)',
-            border: '1px solid rgba(244,241,234,0.08)',
+            background: 'rgba(244,241,234,0.03)',
+            border: '1px solid rgba(244,241,234,0.07)',
             padding: '6px 10px',
           }}
         >
-          ⌘K SEARCH
+          ⌘K SEARCH · ? SHORTCUTS
         </div>
       )}
     </>

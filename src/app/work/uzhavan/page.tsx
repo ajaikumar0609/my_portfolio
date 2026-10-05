@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import ProofUzhavanSection from '@/components/proof/ProofUzhavanSection'
 
 export const metadata: Metadata = {
   title: 'UZHAVAN AI — Ajai Kumar',
@@ -147,6 +148,7 @@ FASTAPI BACKEND
         (Text + Voice output)`}</pre>
         </div>
       </div>
+      <ProofUzhavanSection />
     </main>
   )
 }

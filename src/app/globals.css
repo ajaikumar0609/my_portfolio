@@ -150,6 +150,9 @@ a, button, [role="button"] {
   50% { opacity: 1; }
 }
 
+/* Contrast baseline */
+p { color: rgba(244,241,234,0.7); }
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

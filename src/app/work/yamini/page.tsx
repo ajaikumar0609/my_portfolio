@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import ProofGPSSection from '@/components/proof/ProofGPSSection'
 
 export const metadata: Metadata = {
   title: 'Yamini Infotech ERP — Ajai Kumar',
@@ -162,6 +163,7 @@ FASTAPI BACKEND
           </a>
         </div>
       </div>
+      <ProofGPSSection />
     </main>
   )
 }

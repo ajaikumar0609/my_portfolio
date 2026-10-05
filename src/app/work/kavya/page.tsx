@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import ProofFleetSection from '@/components/proof/ProofFleetSection'
 
 export const metadata: Metadata = {
   title: 'Kavya Transports Fleet — Ajai Kumar',
@@ -110,6 +111,7 @@ BACKEND API
           </div>
         </div>
       </div>
+      <ProofFleetSection />
     </main>
   )
 }
