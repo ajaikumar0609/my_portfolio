@@ -1,249 +1,152 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { ArrowLeft } from "lucide-react";
+import Link from 'next/link'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "UZHAVAN AI — Ajai Kumar",
-  description:
-    "Tamil-first agricultural intelligence platform combining crop intelligence, weather analysis, disease detection, yield prediction, and data-driven decision support.",
-};
+  title: 'UZHAVAN AI — Ajai Kumar',
+  description: 'Tamil-first agricultural intelligence platform: crop advisory, weather analysis, disease detection, and yield prediction using ML and computer vision.',
+}
 
-const capabilities = [
-  {
-    icon: "🌾",
-    label: "CROP INTELLIGENCE",
-    description:
-      "Crop-specific guidance based on season, soil type, and regional agricultural data. Recommendations tailored to Tamil Nadu farming conditions.",
-  },
-  {
-    icon: "☁️",
-    label: "WEATHER ANALYSIS",
-    description:
-      "Hyperlocal weather data integrated with crop growth models to surface actionable insights for planting, irrigation, and harvest decisions.",
-  },
-  {
-    icon: "🧪",
-    label: "DISEASE DETECTION",
-    description:
-      "Computer vision models trained on crop disease datasets. Farmers photograph affected plants for instant identification and treatment guidance.",
-  },
-  {
-    icon: "📈",
-    label: "YIELD PREDICTION",
-    description:
-      "ML models combining crop variety, soil data, weather patterns, and historical yield records to project expected harvest outcomes.",
-  },
-  {
-    icon: "🗣️",
-    label: "TAMIL FIRST",
-    description:
-      "Full Tamil language interface and voice interaction. Designed for farmers who may not be comfortable with English or digital interfaces.",
-  },
-];
-
-const stack = [
-  "Python",
-  "Machine Learning",
-  "Computer Vision",
-  "NLP",
-  "Tamil NLP",
-  "Agriculture Domain",
-  "LLM Integration",
-  "FastAPI",
-  "PostgreSQL",
-  "Google Cloud",
-  "Vertex AI",
-];
+const modules = [
+  { icon: '☁', name: 'Weather Intelligence', desc: 'Real-time weather data integration with agricultural context: rain probability, temperature trends, irrigation recommendations.' },
+  { icon: '🌾', name: 'Crop Advisory', desc: 'Crop-specific guidance based on season, soil type, and location. Variety selection, planting calendars, and care schedules.' },
+  { icon: '🔬', name: 'Disease Detection', desc: 'Computer vision model trained on agricultural disease datasets. Farmers photograph leaves to identify disease, severity, and treatment.' },
+  { icon: '📈', name: 'Yield Prediction', desc: 'ML models estimating yield based on crop variety, weather patterns, soil data, and historical performance in the region.' },
+  { icon: '🗣', name: 'Tamil First', desc: 'All interfaces, advice, and outputs delivered in Tamil. Voice input support for farmers who prefer speaking over typing.' },
+  { icon: '🤖', name: 'LLM Integration', desc: 'Large language model integration for natural conversation about agricultural problems. Context-aware, domain-grounded responses.' },
+]
 
 export default function UzhavanPage() {
   return (
-    <>
-      <Navbar />
-      <main className="pt-28 pb-16 px-6 md:px-[7vw]">
-        <div className="max-w-4xl mx-auto">
-          {/* Back */}
-          <Link
-            href="/work"
-            className="inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase text-[var(--muted)] hover:text-[var(--accent)] transition-colors mb-10"
-          >
-            <ArrowLeft size={14} />
-            All Work
-          </Link>
+    <main style={{ background: '#050505', color: '#F4F1EA', minHeight: '100vh', padding: '0 0 120px' }}>
+      <div className="px-[8vw] pt-10">
+        <Link href="/" style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.35)', textDecoration: 'none' }}
+          className="hover:text-[#B8FF3D] transition-colors">
+          ← BACK
+        </Link>
+      </div>
 
-          {/* Header */}
-          <div className="mb-12">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="font-mono text-[0.6875rem] tracking-widest uppercase text-purple-600 border border-purple-600/30 bg-purple-600/8 px-2.5 py-1 rounded">
-                IN PROGRESS
-              </span>
-              <span className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)]">
-                03 / AI & Agriculture
-              </span>
-            </div>
+      {/* Hero */}
+      <div className="px-[8vw] pt-20 pb-24" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '8px' }}>
+          03 / AI PLATFORM
+        </div>
+        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '20px', color: '#B8FF3D', marginBottom: '16px', letterSpacing: '0.1em' }}>
+          உழவன்
+        </div>
+        <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(48px, 9vw, 120px)', fontWeight: 700, letterSpacing: '-0.03em', color: '#F4F1EA', lineHeight: 0.9, marginBottom: '24px' }}>
+          UZHAVAN<br /><span style={{ color: 'rgba(244,241,234,0.35)' }}>AI</span>
+        </div>
+        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.4)', marginBottom: '8px' }}>
+          Intelligence for the Field, Not Just the Lab
+        </div>
+        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', color: 'rgba(184,255,61,0.5)', letterSpacing: '0.1em' }}>
+          ● IN DEVELOPMENT
+        </div>
+      </div>
 
-            <h1 className="text-[clamp(2.25rem,5vw,4rem)] font-semibold tracking-[-0.03em] leading-[1.05] text-[var(--text)] mb-4">
-              UZHAVAN AI
-            </h1>
-            <p className="text-lg text-[var(--muted)] leading-relaxed max-w-2xl">
-              AI for the field, not just the lab. A Tamil-first agricultural
-              intelligence platform combining crop knowledge, weather
-              intelligence, disease detection, and data-driven decision support
-              for real farmers.
-            </p>
-          </div>
+      <div className="px-[8vw]">
+        {/* Stack */}
+        <div className="py-10 flex flex-wrap gap-4" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+          {['PYTHON', 'ML', 'NLP', 'COMPUTER VISION', 'TAMIL', 'LLM', 'FASTAPI', 'VERTEX AI'].map(t => (
+            <span key={t} style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.12em', color: 'rgba(244,241,234,0.4)', border: '1px solid rgba(244,241,234,0.1)', padding: '5px 12px' }}>{t}</span>
+          ))}
+        </div>
 
-          {/* Visual panel */}
-          <div className="mb-12">
-            <div
-              className="border rounded-xl overflow-hidden"
-              style={{ borderColor: "rgba(124, 58, 237, 0.2)" }}
-            >
-              <div className="p-5 border-b" style={{ borderColor: "rgba(124, 58, 237, 0.1)", background: "rgba(124, 58, 237, 0.03)" }}>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="font-mono text-[0.6875rem] tracking-widest uppercase text-purple-600 mb-1">
-                      UZHAVAN AI
-                    </p>
-                    <p className="text-sm text-[var(--muted)]">
-                      உழவன் — the farmer
-                    </p>
-                  </div>
-                  <span
-                    className="font-mono text-[0.5625rem] tracking-widest uppercase px-2.5 py-1 rounded border"
-                    style={{ color: "#7C3AED", borderColor: "rgba(124, 58, 237, 0.3)", background: "rgba(124, 58, 237, 0.08)" }}
-                  >
-                    AI PLATFORM
-                  </span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-5 divide-x divide-y sm:divide-y-0" style={{ borderColor: "rgba(124, 58, 237, 0.1)" }}>
-                {capabilities.map((cap) => (
-                  <div
-                    key={cap.label}
-                    className="p-4 flex flex-col items-center text-center gap-2"
-                    style={{ borderColor: "rgba(124, 58, 237, 0.1)" }}
-                  >
-                    <span className="text-2xl">{cap.icon}</span>
-                    <span className="font-mono text-[0.5625rem] tracking-widest uppercase text-purple-600">
-                      {cap.label.split(" ")[0]}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Mission */}
-          <div className="mb-12">
-            <h2 className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-4">
-              THE PROBLEM
-            </h2>
-            <div className="border-l-2 border-[var(--border)] pl-5 space-y-3">
-              <p className="text-[var(--muted)] leading-relaxed">
-                Agricultural AI tools exist, but they&apos;re built for researchers
-                and agronomists — not for farmers in Tamil Nadu who speak Tamil,
-                farm on small plots, and need answers they can act on today.
-              </p>
-              <p className="text-[var(--muted)] leading-relaxed">
-                UZHAVAN AI is being built to close that gap: a platform that
-                speaks Tamil natively, understands regional crops and conditions,
-                and gives practical, specific guidance rather than generic
-                agricultural theory.
-              </p>
-            </div>
-          </div>
-
-          {/* Capabilities detail */}
-          <div className="mb-12">
-            <h2 className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-6">
-              PLATFORM CAPABILITIES
-            </h2>
-            <div className="space-y-4">
-              {capabilities.map((cap) => (
-                <div
-                  key={cap.label}
-                  className="flex gap-5 p-5 border border-[var(--border)] bg-white rounded-xl hover:border-purple-300 transition-colors duration-200"
-                >
-                  <span className="text-2xl shrink-0">{cap.icon}</span>
-                  <div>
-                    <h3 className="font-mono text-[0.6875rem] tracking-widest uppercase text-purple-600 mb-2">
-                      {cap.label}
-                    </h3>
-                    <p className="text-sm text-[var(--muted)] leading-relaxed">
-                      {cap.description}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Engineering approach */}
-          <div className="mb-12">
-            <h2 className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-6">
-              ENGINEERING APPROACH
-            </h2>
-            <div className="bg-white border border-[var(--border)] rounded-xl p-6 font-mono text-sm overflow-x-auto">
-              <pre className="text-[var(--muted)] leading-loose">{`Input Layer (Tamil text / image)
-    │
-    ├── Tamil NLP pipeline
-    │       └── Intent classification → query routing
-    │
-    ├── Computer Vision pipeline
-    │       └── Disease detection model (crops)
-    │
-    └── LLM integration
-            └── Agricultural RAG with Tamil corpus
-                    │
-                    ▼
-            Domain Knowledge Layer
-            (crops · diseases · weather · yield data)
-                    │
-                    ▼
-            Response in Tamil + actionable guidance`}</pre>
-            </div>
-          </div>
-
-          {/* Stack */}
-          <div className="mb-12">
-            <h2 className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-4">
-              STACK
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {stack.map((s) => (
-                <span
-                  key={s}
-                  className="font-mono text-xs tracking-wide uppercase px-3 py-1.5 border bg-[var(--bg)] rounded-full"
-                  style={{ borderColor: "rgba(124, 58, 237, 0.2)", color: "#7C3AED" }}
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex items-center justify-between pt-8 border-t border-[var(--border)]">
-            <Link
-              href="/work/kavya"
-              className="inline-flex items-center gap-2 text-sm text-[var(--muted)] hover:text-[var(--accent)] transition-colors font-medium"
-            >
-              <ArrowLeft size={15} />
-              Prev: Kavya Transports
-            </Link>
-            <Link
-              href="/work"
-              className="inline-flex items-center gap-2 text-sm text-[var(--muted)] hover:text-[var(--accent)] transition-colors font-medium"
-            >
-              All Work
-            </Link>
+        {/* Problem */}
+        <div className="py-16" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '16px' }}>THE PROBLEM</div>
+          <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(14px, 1.8vw, 17px)', color: 'rgba(244,241,234,0.6)', lineHeight: 1.85, maxWidth: '720px' }}>
+            Most agricultural AI tools are built in English, tested in lab environments, and assume
+            internet-connected smartphones with technical literacy. Tamil Nadu&rsquo;s farmers speak Tamil,
+            work in fields with intermittent connectivity, and need advice that reflects their actual
+            crops, soils, and climate &mdash; not generic guides.
+            <br /><br />
+            UZHAVAN AI is built to work in the real conditions of Tamil Nadu agriculture.
           </div>
         </div>
-      </main>
-      <Footer />
-    </>
-  );
+
+        {/* Data flow */}
+        <div className="py-16" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '16px' }}>DATA FLOW</div>
+          <div className="flex items-center gap-0 flex-wrap">
+            {['WEATHER', 'CROP DATA', 'DISEASE IMAGE', 'SOIL', 'LOCATION'].map((n, i) => (
+              <div key={n} className="flex items-center gap-0">
+                {i > 0 && <div style={{ width: '32px', height: '1px', background: 'rgba(184,255,61,0.3)' }} />}
+                <div style={{
+                  fontFamily: 'IBM Plex Mono, monospace',
+                  fontSize: '9px',
+                  letterSpacing: '0.1em',
+                  color: '#B8FF3D',
+                  border: '1px solid rgba(184,255,61,0.2)',
+                  padding: '6px 10px',
+                  background: 'rgba(184,255,61,0.04)',
+                }}>
+                  {n}
+                </div>
+              </div>
+            ))}
+            <div style={{ width: '32px', height: '1px', background: 'rgba(184,255,61,0.3)' }} />
+            <div style={{
+              fontFamily: 'IBM Plex Mono, monospace',
+              fontSize: '9px',
+              letterSpacing: '0.1em',
+              color: '#050505',
+              background: '#B8FF3D',
+              padding: '6px 12px',
+            }}>
+              ML + LLM
+            </div>
+            <div style={{ width: '32px', height: '1px', background: 'rgba(184,255,61,0.3)' }} />
+            <div style={{
+              fontFamily: 'IBM Plex Mono, monospace',
+              fontSize: '9px',
+              letterSpacing: '0.1em',
+              color: '#B8FF3D',
+              border: '1px solid rgba(184,255,61,0.4)',
+              padding: '6px 10px',
+            }}>
+              TAMIL ADVICE
+            </div>
+          </div>
+        </div>
+
+        {/* Modules */}
+        <div className="py-16" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '32px' }}>MODULES</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style={{ background: 'rgba(244,241,234,0.06)' }}>
+            {modules.map(m => (
+              <div key={m.name} className="p-8" style={{ background: '#050505' }}>
+                <div style={{ fontSize: '24px', marginBottom: '12px' }}>{m.icon}</div>
+                <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', letterSpacing: '0.15em', color: '#F4F1EA', marginBottom: '10px' }}>{m.name}</div>
+                <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '13px', color: 'rgba(244,241,234,0.5)', lineHeight: 1.75 }}>{m.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Architecture */}
+        <div className="py-16">
+          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '16px' }}>ARCHITECTURE</div>
+          <pre style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '12px', color: 'rgba(244,241,234,0.5)', lineHeight: 2, letterSpacing: '0.02em' }}>{`FARMER INPUT (Tamil voice / text / image)
+        │
+        ▼
+FASTAPI BACKEND
+        │
+        ├── Vision Pipeline     Disease detection (CV model)
+        │
+        ├── NLP Pipeline        Tamil language understanding
+        │
+        ├── Weather Engine      Real-time + forecast data
+        │
+        ├── Crop Knowledge      Domain-specific database
+        │
+        └── LLM Layer          Grounded response generation
+                 │
+                 ▼
+        TAMIL LANGUAGE RESPONSE
+        (Text + Voice output)`}</pre>
+        </div>
+      </div>
+    </main>
+  )
 }

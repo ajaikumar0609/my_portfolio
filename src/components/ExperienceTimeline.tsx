@@ -1,196 +1,207 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useRef } from 'react'
 
-interface Experience {
-  year: string;
-  role: string;
-  company: string;
-  type: string;
-  duration: string;
-  description: string;
-  logo: string;
-  skills: string[];
-}
-
-const experiences: Experience[] = [
+const experiences = [
   {
-    year: "2025",
-    role: "AI / Development Intern",
-    company: "Icanio Tech School",
-    type: "Internship",
-    duration: "2025",
-    description:
-      "Worked on AI development projects, building intelligent applications and exploring machine learning pipelines in a fast-paced startup environment.",
-    logo: "/icanio.jpeg",
-    skills: ["Python", "Machine Learning", "AI Development"],
+    year: '2023',
+    company: 'KARUNYA INSTITUTE',
+    role: 'B.Tech CSE (AI)',
+    type: 'EDUCATION',
+    bullets: [
+      'Computer Science & Engineering with specialization in Artificial Intelligence',
+      'Core focus: ML, Data Structures, Backend Systems, Mobile Dev',
+      'Tirunelveli, Tamil Nadu',
+    ],
   },
   {
-    year: "2024",
-    role: "Full Stack Development Intern",
-    company: "LifeChangers IND",
-    type: "Internship",
-    duration: "2024",
-    description:
-      "Built full stack web applications using modern frameworks, implementing backend APIs and frontend interfaces for client-facing products.",
-    logo: "/life_changers_ind.jpeg",
-    skills: ["Full Stack", "Web APIs", "Frontend"],
+    year: '2024',
+    company: 'LIFECHANGERS IND',
+    role: 'Web Development Intern',
+    type: 'INTERNSHIP',
+    bullets: [
+      'Built and deployed web interfaces for client projects',
+      'Frontend development with modern JavaScript frameworks',
+      'Collaborated with cross-functional team on product delivery',
+    ],
   },
   {
-    year: "2024",
-    role: "Web Development Intern",
-    company: "LifeChangers IND",
-    type: "Internship",
-    duration: "2024",
-    description:
-      "Developed responsive web interfaces and contributed to production web projects.",
-    logo: "/life_changers_ind.jpeg",
-    skills: ["HTML/CSS", "JavaScript", "Responsive Design"],
+    year: '2024',
+    company: 'LIFECHANGERS IND',
+    role: 'Full Stack Development Intern',
+    type: 'INTERNSHIP',
+    bullets: [
+      'Full-stack development: frontend, backend, database integration',
+      'Built REST APIs and integrated third-party services',
+      'Deployed production applications to cloud infrastructure',
+    ],
   },
   {
-    year: "2023",
-    role: "B.Tech Computer Science + AI",
-    company: "Karunya Institute",
-    type: "Education",
-    duration: "2023 – Present",
-    description:
-      "Studying Computer Science with specialization in Artificial Intelligence. Focus on systems programming, machine learning, and software engineering.",
-    logo: "/karunya.png",
-    skills: ["Computer Science", "AI/ML", "Software Engineering"],
+    year: '2025',
+    company: 'ICANIO TECH SCHOOL',
+    role: 'AI Development Intern',
+    type: 'INTERNSHIP',
+    bullets: [
+      'Worked on AI/ML model development and deployment pipelines',
+      'Built intelligent applications integrating LLM capabilities',
+      'Contributed to production AI infrastructure',
+    ],
   },
-];
+]
 
 export default function ExperienceTimeline() {
-  const [expanded, setExpanded] = useState<number | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const handler = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault()
+        el.scrollLeft += e.deltaY
+      }
+    }
+    el.addEventListener('wheel', handler, { passive: false })
+    return () => el.removeEventListener('wheel', handler)
+  }, [])
 
   return (
-    <section id="experience" className="py-24 px-6 md:px-[7vw]">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-12"
-        >
-          <p className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-3">
-            EXPERIENCE
-          </p>
-          <h2 className="text-[clamp(2rem,3.5vw,3rem)] font-semibold tracking-[-0.02em] text-[var(--text)]">
-            Where I&apos;ve worked and learned.
-          </h2>
-        </motion.div>
-
-        <div className="relative">
-          {/* Timeline track */}
-          <div className="absolute left-[3.25rem] top-0 bottom-0 w-px bg-[var(--border)] hidden sm:block" />
-
-          <div className="space-y-0">
-            {experiences.map((exp, i) => (
-              <motion.div
-                key={`${exp.company}-${i}`}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.07 }}
-              >
-                <button
-                  className="w-full text-left group"
-                  onClick={() => setExpanded(expanded === i ? null : i)}
-                  aria-expanded={expanded === i}
-                >
-                  <div className="flex items-start gap-4 sm:gap-8 py-5 border-b border-[var(--border)] hover:border-[var(--text)]/20 transition-colors duration-200">
-                    {/* Year */}
-                    <div className="w-10 shrink-0 text-right">
-                      <span className="font-mono text-xs text-[var(--muted)] tracking-wide">
-                        {exp.year}
-                      </span>
-                    </div>
-
-                    {/* Timeline dot */}
-                    <div className="relative shrink-0 hidden sm:block">
-                      <div
-                        className={`w-2 h-2 rounded-full border transition-all duration-200 mt-2 ${
-                          expanded === i
-                            ? "bg-[var(--accent)] border-[var(--accent)]"
-                            : "bg-white border-[var(--border)] group-hover:border-[var(--accent)]"
-                        }`}
-                      />
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <h3 className="text-base font-semibold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors duration-200">
-                            {exp.role}
-                          </h3>
-                          <p className="text-sm text-[var(--muted)] mt-0.5">
-                            {exp.company}{" "}
-                            <span className="font-mono text-[0.625rem] tracking-widest uppercase ml-2 border border-[var(--border)] px-1.5 py-0.5 rounded text-[var(--muted)]">
-                              {exp.type}
-                            </span>
-                          </p>
-                        </div>
-                        <ChevronDown
-                          size={16}
-                          className={`text-[var(--muted)] shrink-0 mt-1 transition-transform duration-200 ${
-                            expanded === i ? "rotate-180" : ""
-                          }`}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </button>
-
-                <AnimatePresence>
-                  {expanded === i && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.25, ease: "easeInOut" }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pl-[4.5rem] pb-5 pt-3 flex gap-4">
-                        <div className="shrink-0">
-                          <div className="w-9 h-9 rounded-lg overflow-hidden border border-[var(--border)] bg-white">
-                            <Image
-                              src={exp.logo}
-                              alt={exp.company}
-                              width={36}
-                              height={36}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <p className="text-sm text-[var(--muted)] leading-relaxed mb-3">
-                            {exp.description}
-                          </p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {exp.skills.map((skill) => (
-                              <span
-                                key={skill}
-                                className="font-mono text-[0.5625rem] tracking-wide uppercase px-2 py-0.5 bg-[var(--bg)] border border-[var(--border)] text-[var(--muted)] rounded"
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
-          </div>
+    <section className="py-32" style={{ overflow: 'hidden' }}>
+      {/* Section header */}
+      <div className="px-[8vw] md:px-[12vw] mb-16">
+        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D' }} className="mb-3">
+          05 / EXPERIENCE
+        </div>
+        <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, letterSpacing: '-0.03em', color: '#F4F1EA', lineHeight: 1 }}>
+          TIMELINE
+        </div>
+        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.25)', marginTop: '8px' }}>
+          ← SCROLL / SWIPE →
         </div>
       </div>
+
+      {/* Horizontal scroll container */}
+      <div
+        ref={scrollRef}
+        className="flex gap-0 overflow-x-auto"
+        style={{
+          scrollSnapType: 'x mandatory',
+          scrollbarWidth: 'none',
+          msOverflowStyle: 'none',
+          paddingLeft: '8vw',
+          paddingRight: '8vw',
+        }}
+      >
+        {/* Horizontal line */}
+        <div
+          className="absolute"
+          style={{ top: '50%', left: '8vw', right: '8vw', height: '1px', background: 'rgba(244,241,234,0.06)', pointerEvents: 'none' }}
+        />
+
+        {experiences.map((exp, i) => (
+          <div
+            key={i}
+            className="flex-shrink-0"
+            style={{
+              scrollSnapAlign: 'start',
+              width: 'clamp(280px, 40vw, 380px)',
+              marginRight: '2px',
+              padding: '40px 32px',
+              background: 'rgba(244,241,234,0.02)',
+              border: '1px solid rgba(244,241,234,0.06)',
+              position: 'relative',
+            }}
+          >
+            {/* Index */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '20px',
+                right: '20px',
+                fontFamily: 'IBM Plex Mono, monospace',
+                fontSize: '10px',
+                letterSpacing: '0.15em',
+                color: 'rgba(244,241,234,0.2)',
+              }}
+            >
+              0{i + 1}
+            </div>
+
+            {/* Year */}
+            <div
+              style={{
+                fontFamily: 'IBM Plex Mono, monospace',
+                fontSize: 'clamp(48px, 8vw, 72px)',
+                fontWeight: 600,
+                color: 'rgba(244,241,234,0.08)',
+                lineHeight: 1,
+                marginBottom: '16px',
+              }}
+            >
+              {exp.year}
+            </div>
+
+            {/* Type badge */}
+            <div
+              style={{
+                fontFamily: 'IBM Plex Mono, monospace',
+                fontSize: '9px',
+                letterSpacing: '0.2em',
+                color: exp.type === 'EDUCATION' ? '#4DE8FF' : '#B8FF3D',
+                marginBottom: '8px',
+              }}
+            >
+              {exp.type}
+            </div>
+
+            {/* Company */}
+            <div
+              style={{
+                fontFamily: 'Space Grotesk, sans-serif',
+                fontSize: 'clamp(18px, 2.5vw, 24px)',
+                fontWeight: 600,
+                color: '#F4F1EA',
+                letterSpacing: '-0.01em',
+                marginBottom: '4px',
+              }}
+            >
+              {exp.company}
+            </div>
+
+            {/* Role */}
+            <div
+              style={{
+                fontFamily: 'IBM Plex Mono, monospace',
+                fontSize: '11px',
+                color: 'rgba(244,241,234,0.4)',
+                letterSpacing: '0.08em',
+                marginBottom: '20px',
+              }}
+            >
+              {exp.role}
+            </div>
+
+            {/* Bullets */}
+            <div className="flex flex-col gap-2">
+              {exp.bullets.map((b, bi) => (
+                <div
+                  key={bi}
+                  style={{
+                    fontFamily: 'Space Grotesk, sans-serif',
+                    fontSize: '13px',
+                    color: 'rgba(244,241,234,0.45)',
+                    lineHeight: 1.6,
+                    paddingLeft: '12px',
+                    borderLeft: '1px solid rgba(244,241,234,0.08)',
+                  }}
+                >
+                  {b}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
-  );
+  )
 }

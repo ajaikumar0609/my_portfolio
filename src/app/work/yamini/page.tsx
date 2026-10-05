@@ -1,269 +1,167 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import Link from 'next/link'
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Yamini Infotech ERP — Ajai Kumar",
-  description:
-    "Enterprise workforce operations platform with real-time GPS tracking, attendance automation, and operational dashboards for 247+ field employees.",
-};
+  title: 'Yamini Infotech ERP — Ajai Kumar',
+  description: 'Enterprise workforce operations platform: GPS tracking, attendance automation, and operational dashboards for 247+ field employees.',
+}
 
 const challenges = [
   {
-    title: "Background GPS on Android",
-    description:
-      "Android aggressively kills background processes. Built a foreground service with wake locks and a custom notification to keep GPS alive during full work shifts without excessive battery drain.",
+    title: 'Background GPS',
+    desc: 'Maintaining continuous GPS tracking on Android while the app is backgrounded. Implemented a foreground service with persistent notification to prevent OS from killing the tracking process.',
   },
   {
-    title: "Authentication Lifecycle",
-    description:
-      "Managed multi-device sessions with token rotation, session expiry handling, and automatic refresh flows so field staff are never unexpectedly logged out mid-shift.",
+    title: 'Authentication Lifecycle',
+    desc: 'Secure JWT-based authentication with token refresh cycles, device binding, and session invalidation across mobile and web clients.',
   },
   {
-    title: "Offline GPS Queue",
-    description:
-      "Network connectivity in field zones is unreliable. Built a local SQLite queue that stores GPS events when offline and syncs them in order when connectivity is restored.",
+    title: 'Offline GPS Queue',
+    desc: 'When connectivity drops, GPS coordinates are queued locally and bulk-synced to the server when the connection is restored, preventing data loss in low-signal areas.',
   },
   {
-    title: "Route Segmentation",
-    description:
-      "Raw GPS streams are noisy. Implemented Haversine-based distance calculations and time-gap analysis to segment continuous movement into clean, meaningful route segments.",
+    title: 'Route Segmentation',
+    desc: 'Algorithms to intelligently split continuous GPS streams into meaningful route segments, identifying stops, travel periods, and deviations from expected paths.',
   },
   {
-    title: "Real-time Map Dashboard",
-    description:
-      "Admin dashboard showing live employee positions updating via WebSocket connections. Built map clustering for 247+ simultaneous dots without UI performance degradation.",
+    title: 'High-Frequency Writes',
+    desc: 'PostgreSQL schema and indexing strategy optimized for continuous high-frequency GPS writes from 247+ concurrent devices without query degradation.',
   },
   {
-    title: "Mobile Reliability",
-    description:
-      "Field devices run a wide range of Android versions with inconsistent hardware. Built defensive code paths, graceful degradation, and extensive error logging for production stability.",
+    title: 'Geofence Attendance',
+    desc: 'Automated punch-in/punch-out logic using geofence detection — employees entering designated zones automatically trigger attendance records.',
   },
-];
-
-const stack = [
-  "FastAPI",
-  "PostgreSQL",
-  "Flutter",
-  "Python",
-  "GPS",
-  "Background Services",
-  "WebSocket",
-  "SQLite",
-  "Android",
-  "REST APIs",
-];
+]
 
 export default function YaminiPage() {
   return (
-    <>
-      <Navbar />
-      <main className="pt-28 pb-16 px-6 md:px-[7vw]">
-        <div className="max-w-4xl mx-auto">
-          {/* Back */}
-          <Link
-            href="/work"
-            className="inline-flex items-center gap-2 font-mono text-xs tracking-widest uppercase text-[var(--muted)] hover:text-[var(--accent)] transition-colors mb-10"
-          >
-            <ArrowLeft size={14} />
-            All Work
-          </Link>
+    <main style={{ background: '#050505', color: '#F4F1EA', minHeight: '100vh', padding: '0 0 120px' }}>
+      {/* Back */}
+      <div className="px-[8vw] pt-10 pb-0">
+        <Link
+          href="/"
+          style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.35)', textDecoration: 'none' }}
+          className="hover:text-[#B8FF3D] transition-colors"
+        >
+          ← BACK
+        </Link>
+      </div>
 
-          {/* Header */}
-          <div className="mb-12">
-            <div className="flex items-center gap-3 mb-4">
-              <span className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--accent)] border border-[var(--accent)]/30 bg-[var(--accent)]/8 px-2.5 py-1 rounded">
-                PRODUCTION · LIVE
-              </span>
-              <span className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)]">
-                01 / Enterprise Backend
-              </span>
-            </div>
+      {/* Hero */}
+      <div className="px-[8vw] pt-20 pb-24" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '16px' }}>
+          01 / ENTERPRISE ERP
+        </div>
+        <div
+          style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontSize: 'clamp(48px, 9vw, 120px)',
+            fontWeight: 700,
+            letterSpacing: '-0.03em',
+            color: '#F4F1EA',
+            lineHeight: 0.9,
+            marginBottom: '24px',
+          }}
+        >
+          YAMINI<br />INFOTECH<br /><span style={{ color: 'rgba(244,241,234,0.35)' }}>ERP</span>
+        </div>
+        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.4)', marginBottom: '8px' }}>
+          Enterprise Workforce Operations Platform
+        </div>
+        <div className="flex items-center gap-2" style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', color: '#B8FF3D' }}>
+          <span className="w-[6px] h-[6px] rounded-full bg-[#B8FF3D] inline-block" />
+          PRODUCTION / LIVE
+        </div>
+      </div>
 
-            <h1 className="text-[clamp(2.25rem,5vw,4rem)] font-semibold tracking-[-0.03em] leading-[1.05] text-[var(--text)] mb-4">
-              Yamini Infotech ERP
-            </h1>
-            <p className="text-lg text-[var(--muted)] leading-relaxed max-w-2xl">
-              Enterprise workforce operations platform with real-time GPS
-              tracking, attendance automation, and centralized operational
-              dashboards for 247+ field employees.
-            </p>
-          </div>
+      <div className="px-[8vw]">
+        {/* Stack */}
+        <div className="py-10 flex flex-wrap gap-4" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+          {['FASTAPI', 'POSTGRESQL', 'GPS', 'FLUTTER', 'PYTHON', 'BACKGROUND SERVICES', 'ANDROID'].map(t => (
+            <span key={t} style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.12em', color: 'rgba(244,241,234,0.4)', border: '1px solid rgba(244,241,234,0.1)', padding: '5px 12px' }}>{t}</span>
+          ))}
+        </div>
 
-          {/* Client identity */}
-          <div className="flex items-center gap-4 p-5 border border-[var(--border)] bg-white rounded-xl mb-12">
-            <div className="w-12 h-12 rounded-lg overflow-hidden border border-[var(--border)] bg-white shrink-0">
-              <Image
-                src="/yamini-logo.png"
-                alt="Yamini Infotech"
-                width={48}
-                height={48}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div>
-              <div className="font-semibold text-[var(--text)]">
-                Yamini Infotech
-              </div>
-              <a
-                href="https://www.yaminicopier.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-xs text-[var(--accent)] hover:underline inline-flex items-center gap-1"
-              >
-                yaminicopier.com <ArrowUpRight size={11} />
-              </a>
-            </div>
-            <div className="ml-auto text-right">
-              <div className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)]">
-                Tirunelveli, India
-              </div>
-              <div className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mt-1">
-                2024
-              </div>
-            </div>
-          </div>
-
-          {/* Problem */}
-          <div className="mb-12">
-            <h2 className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-4">
-              THE PROBLEM
-            </h2>
-            <div className="border-l-2 border-[var(--border)] pl-5 space-y-3">
-              <p className="text-[var(--muted)] leading-relaxed">
-                Yamini Infotech operates a large field workforce across
-                Tirunelveli. Before this system, attendance was tracked manually
-                with paper registers. Supervisors had no visibility into where
-                field employees were during work hours. Route records didn&apos;t
-                exist. Operational reporting was done days after the fact from
-                scattered records.
-              </p>
-              <p className="text-[var(--muted)] leading-relaxed">
-                The ask was straightforward: build a system that actually works —
-                that field staff will use on low-end Android phones, that
-                captures GPS reliably even with spotty connectivity, and that
-                gives management a live view of operations.
-              </p>
-            </div>
-          </div>
-
-          {/* Architecture */}
-          <div className="mb-12">
-            <h2 className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-6">
-              ARCHITECTURE
-            </h2>
-            <div className="bg-white border border-[var(--border)] rounded-xl p-6 font-mono text-sm overflow-x-auto">
-              <pre className="text-[var(--muted)] leading-loose">{`Flutter App
-    │
-    ▼
-FastAPI Backend
-    │
-    ├── /auth          Authentication + Token lifecycle
-    │
-    ├── /attendance    Geofence punch-in / punch-out
-    │
-    ├── /gps           Real-time location stream (WebSocket)
-    │
-    └── /operations    Reports, dashboards, admin
-           │
-           ▼
-       PostgreSQL
-       (positions, users, attendance, operations)
-
-Mobile Offline Layer:
-    SQLite queue → Sync on reconnect`}</pre>
-            </div>
-          </div>
-
-          {/* Engineering Challenges */}
-          <div className="mb-12">
-            <h2 className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-6">
-              ENGINEERING CHALLENGES
-            </h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              {challenges.map((c) => (
-                <div
-                  key={c.title}
-                  className="border border-[var(--border)] bg-white rounded-xl p-5 hover:border-[var(--accent)]/30 transition-colors duration-200"
-                >
-                  <h3 className="font-semibold text-[var(--text)] mb-2">
-                    {c.title}
-                  </h3>
-                  <p className="text-sm text-[var(--muted)] leading-relaxed">
-                    {c.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Stack */}
-          <div className="mb-12">
-            <h2 className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-4">
-              STACK
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {stack.map((s) => (
-                <span
-                  key={s}
-                  className="font-mono text-xs tracking-wide uppercase px-3 py-1.5 border border-[var(--border)] bg-[var(--bg)] text-[var(--muted)] rounded-full"
-                >
-                  {s}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Results */}
-          <div className="mb-12">
-            <h2 className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-6">
-              RESULTS
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { num: "247+", label: "Employees tracked" },
-                { num: "Real-time", label: "GPS updates" },
-                { num: "100%", label: "Automated attendance" },
-                { num: "Production", label: "Status" },
-              ].map(({ num, label }) => (
-                <div
-                  key={label}
-                  className="border border-[var(--border)] bg-white rounded-xl p-4 text-center"
-                >
-                  <div className="font-mono text-xl font-semibold text-[var(--text)] mb-1">
-                    {num}
-                  </div>
-                  <div className="font-mono text-[0.5625rem] tracking-widest uppercase text-[var(--muted)]">
-                    {label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex items-center justify-between pt-8 border-t border-[var(--border)]">
-            <Link
-              href="/work"
-              className="inline-flex items-center gap-2 text-sm text-[var(--muted)] hover:text-[var(--accent)] transition-colors font-medium"
-            >
-              <ArrowLeft size={15} />
-              All Work
-            </Link>
-            <Link
-              href="/work/kavya"
-              className="inline-flex items-center gap-2 text-sm text-[var(--muted)] hover:text-[var(--accent)] transition-colors font-medium"
-            >
-              Next: Kavya Transports
-              <ArrowUpRight size={15} />
-            </Link>
+        {/* Problem */}
+        <div className="py-16" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '16px' }}>PROBLEM</div>
+          <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(14px, 1.8vw, 17px)', color: 'rgba(244,241,234,0.6)', lineHeight: 1.85, maxWidth: '720px' }}>
+            Yamini Infotech operated across a large field workforce with no digital attendance system, manual GPS logging, and zero real-time visibility into employee location or activity. Supervisors had no way to monitor operations, verify attendance, or track field routes &mdash; everything was paper-based or phone-based.
           </div>
         </div>
-      </main>
-      <Footer />
-    </>
-  );
+
+        {/* Architecture */}
+        <div className="py-16" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '16px' }}>ARCHITECTURE</div>
+          <pre
+            style={{
+              fontFamily: 'IBM Plex Mono, monospace',
+              fontSize: '12px',
+              color: 'rgba(244,241,234,0.5)',
+              lineHeight: 2,
+              letterSpacing: '0.02em',
+            }}
+          >{`FLUTTER MOBILE APP
+        │
+        ▼
+FASTAPI BACKEND
+        │
+        ├── /auth          JWT + device binding
+        │
+        ├── /attendance    Geofence punch in/out
+        │
+        ├── /gps           Background location stream
+        │
+        └── /operations    Dashboard, reports, admin
+                 │
+                 ▼
+          POSTGRESQL
+          (GPS · Users · Routes · Attendance)`}</pre>
+        </div>
+
+        {/* Engineering Challenges */}
+        <div className="py-16" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '32px' }}>ENGINEERING</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ background: 'rgba(244,241,234,0.06)' }}>
+            {challenges.map(c => (
+              <div key={c.title} className="p-8" style={{ background: '#050505' }}>
+                <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', letterSpacing: '0.15em', color: '#F4F1EA', marginBottom: '10px' }}>
+                  {c.title}
+                </div>
+                <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '13px', color: 'rgba(244,241,234,0.5)', lineHeight: 1.75 }}>
+                  {c.desc}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Result */}
+        <div className="py-16">
+          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '24px' }}>RESULT</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px mb-12" style={{ background: 'rgba(244,241,234,0.06)' }}>
+            {[
+              { num: '247+', label: 'Field Employees' },
+              { num: 'Live', label: 'GPS Tracking' },
+              { num: 'Auto', label: 'Attendance' },
+              { num: '100%', label: 'Digital Ops' },
+            ].map(stat => (
+              <div key={stat.label} className="p-8 text-center" style={{ background: '#050505' }}>
+                <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: '#B8FF3D', letterSpacing: '-0.02em' }}>{stat.num}</div>
+                <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.3)', marginTop: '6px' }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
+          <a
+            href="https://www.yaminicopier.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', letterSpacing: '0.15em', color: '#B8FF3D', textDecoration: 'none' }}
+          >
+            VIEW CLIENT SITE ↗
+          </a>
+        </div>
+      </div>
+    </main>
+  )
 }

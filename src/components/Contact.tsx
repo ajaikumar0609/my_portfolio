@@ -1,79 +1,138 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
+'use client'
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-32 px-6 md:px-[7vw] bg-white border-t border-[var(--border)]">
-      <div className="max-w-6xl mx-auto text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-6"
-        >
-          CONTACT
-        </motion.p>
+    <section
+      id="contact"
+      className="relative flex flex-col items-center justify-center text-center"
+      style={{ minHeight: '100svh', padding: '80px 8vw' }}
+    >
+      {/* Huge headline */}
+      <div
+        style={{
+          fontFamily: 'Space Grotesk, sans-serif',
+          fontSize: 'clamp(52px, 10vw, 130px)',
+          fontWeight: 700,
+          letterSpacing: '-0.04em',
+          color: '#F4F1EA',
+          lineHeight: 0.9,
+          marginBottom: '48px',
+        }}
+      >
+        LET&rsquo;S<br />BUILD.
+      </div>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="text-[clamp(2.25rem,5vw,4.5rem)] font-semibold tracking-[-0.03em] leading-[1.05] text-[var(--text)] mb-10"
-        >
-          Have something worth building?
-        </motion.h2>
+      {/* Sub */}
+      <div
+        className="mb-16"
+        style={{
+          fontFamily: 'IBM Plex Mono, monospace',
+          fontSize: '11px',
+          letterSpacing: '0.25em',
+          color: 'rgba(244,241,234,0.35)',
+        }}
+      >
+        AJAI KUMAR / AI ENGINEER / BACKEND / SYSTEMS
+      </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex flex-wrap justify-center gap-4 mb-10"
+      {/* Contact links — scattered */}
+      <div className="flex flex-col sm:flex-row items-center gap-8 sm:gap-16">
+        <a
+          href="mailto:ajaikumar0609@gmail.com"
+          className="magnetic group"
+          data-cursor="explore"
+          style={{
+            fontFamily: 'IBM Plex Mono, monospace',
+            fontSize: '12px',
+            letterSpacing: '0.15em',
+            color: 'rgba(244,241,234,0.5)',
+            textDecoration: 'none',
+            transition: 'color 0.2s',
+            borderBottom: '1px solid transparent',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.color = '#B8FF3D'
+            ;(e.currentTarget as HTMLElement).style.borderBottomColor = '#B8FF3D'
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.color = 'rgba(244,241,234,0.5)'
+            ;(e.currentTarget as HTMLElement).style.borderBottomColor = 'transparent'
+          }}
         >
-          <a
-            href="mailto:ajaikumar0609@gmail.com"
-            className="inline-flex items-center gap-2 px-7 py-3.5 bg-[var(--accent)] text-white text-sm font-medium rounded-full hover:bg-[var(--accent-dark)] transition-colors duration-200"
-          >
-            <Mail size={15} />
-            Email me
-            <ArrowRight size={15} />
-          </a>
-          <a
-            href="https://linkedin.com/in/ajaikumarn"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3.5 border border-[var(--border)] text-[var(--text)] text-sm font-medium rounded-full hover:border-[var(--text)] transition-colors duration-200"
-          >
-            <Linkedin size={15} />
-            LinkedIn
-            <ArrowUpRight size={15} />
-          </a>
-          <a
-            href="https://github.com/ajaikumarN"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-7 py-3.5 border border-[var(--border)] text-[var(--text)] text-sm font-medium rounded-full hover:border-[var(--text)] transition-colors duration-200"
-          >
-            <Github size={15} />
-            GitHub
-            <ArrowUpRight size={15} />
-          </a>
-        </motion.div>
+          EMAIL ME →
+        </a>
+        <a
+          href="https://linkedin.com/in/ajaikumarn"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="magnetic group"
+          style={{
+            fontFamily: 'IBM Plex Mono, monospace',
+            fontSize: '12px',
+            letterSpacing: '0.15em',
+            color: 'rgba(244,241,234,0.5)',
+            textDecoration: 'none',
+            transition: 'color 0.2s',
+            borderBottom: '1px solid transparent',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.color = '#4DE8FF'
+            ;(e.currentTarget as HTMLElement).style.borderBottomColor = '#4DE8FF'
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.color = 'rgba(244,241,234,0.5)'
+            ;(e.currentTarget as HTMLElement).style.borderBottomColor = 'transparent'
+          }}
+        >
+          LINKEDIN ↗
+        </a>
+        <a
+          href="https://github.com/ajaikumarN"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="magnetic group"
+          style={{
+            fontFamily: 'IBM Plex Mono, monospace',
+            fontSize: '12px',
+            letterSpacing: '0.15em',
+            color: 'rgba(244,241,234,0.5)',
+            textDecoration: 'none',
+            transition: 'color 0.2s',
+            borderBottom: '1px solid transparent',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.color = '#F4F1EA'
+            ;(e.currentTarget as HTMLElement).style.borderBottomColor = 'rgba(244,241,234,0.3)'
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.color = 'rgba(244,241,234,0.5)'
+            ;(e.currentTarget as HTMLElement).style.borderBottomColor = 'transparent'
+          }}
+        >
+          GITHUB ↗
+        </a>
+      </div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          className="font-mono text-xs tracking-wide text-[var(--muted)]"
-        >
-          India · Available for internships / opportunities
-        </motion.p>
+      {/* Location / availability */}
+      <div
+        className="mt-16"
+        style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.2)' }}
+      >
+        INDIA · AVAILABLE FOR INTERNSHIPS / OPPORTUNITIES
+      </div>
+
+      {/* Footer */}
+      <div
+        className="absolute bottom-8"
+        style={{
+          fontFamily: 'IBM Plex Mono, monospace',
+          fontSize: '10px',
+          letterSpacing: '0.12em',
+          color: 'rgba(244,241,234,0.15)',
+        }}
+      >
+        © 2026 AJAI KUMAR
       </div>
     </section>
-  );
+  )
 }

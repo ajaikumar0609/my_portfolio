@@ -1,19 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg: #F7F7F5;
-  --surface: #FFFFFF;
-  --text: #111111;
-  --muted: #686868;
-  --border: #D9D9D4;
-  --accent: #15B87A;
-  --accent-dark: #087A55;
+  --font-space-grotesk: 'Space Grotesk', system-ui, sans-serif;
+  --font-ibm-plex-mono: 'IBM Plex Mono', monospace;
+  --bg: #050505;
+  --text: #F4F1EA;
+  --lime: #B8FF3D;
+  --cyan: #4DE8FF;
+  --muted: rgba(244,241,234,0.4);
+  --border: rgba(244,241,234,0.08);
 }
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
@@ -21,47 +26,128 @@ html {
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: var(--font-geist-sans), Inter, system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background: #050505;
+  color: #F4F1EA;
+  font-family: var(--font-space-grotesk);
   overflow-x: hidden;
+  cursor: none;
 }
 
-/* Engineering grid background pattern */
-.engineering-grid {
-  background-image:
-    radial-gradient(circle, #D9D9D4 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.5;
+/* Grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.4;
 }
 
-/* Scrollbar */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 3px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: #050505;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: #B8FF3D;
   border-radius: 2px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+
+/* Cursor: none on all interactive elements */
+a, button, [role="button"] {
+  cursor: none;
 }
 
 /* Selection */
 ::selection {
-  background: rgba(21, 184, 122, 0.15);
-  color: var(--accent-dark);
+  background: rgba(184,255,61,0.2);
+  color: #B8FF3D;
 }
 
-/* Focus visible */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+/* Utility classes */
+.font-mono {
+  font-family: var(--font-ibm-plex-mono);
+}
+
+.text-lime {
+  color: #B8FF3D;
+}
+
+.text-cyan {
+  color: #4DE8FF;
+}
+
+.text-muted {
+  color: rgba(244,241,234,0.4);
+}
+
+.border-system {
+  border-color: rgba(244,241,234,0.08);
+}
+
+/* Section label */
+.section-label {
+  font-family: var(--font-ibm-plex-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #B8FF3D;
+}
+
+/* Magnetic elements */
+.magnetic {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* GPS pulse animation */
+@keyframes gpsPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* Crop row animation for Uzhavan */
+@keyframes cropGrow {
+  0% { opacity: 0; transform: scaleX(0); }
+  100% { opacity: 1; transform: scaleX(1); }
+}
+
+/* Typing cursor blink */
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Orbit keyframes */
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Fade up */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Progress bar fill */
+@keyframes fillBar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+/* Route dash animation */
+@keyframes routeDash {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Glow pulse */
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 /* Reduced motion */
@@ -71,22 +157,4 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* Mono utility */
-.font-mono {
-  font-family: var(--font-jetbrains-mono), 'JetBrains Mono', monospace;
-}
-
-/* System label style */
-.system-label {
-  font-family: var(--font-jetbrains-mono), monospace;
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
 }

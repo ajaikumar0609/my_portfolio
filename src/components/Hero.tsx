@@ -1,187 +1,125 @@
-"use client";
+'use client'
 
-import { useRef, useEffect } from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, Github, Linkedin } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from 'react'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1], delay },
-  }),
-};
+const HeroScene = dynamic(() => import('./HeroScene'), { ssr: false })
 
 export default function Hero() {
-  const gridRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null)
+  const mouseRef = useRef({ x: 0, y: 0 })
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const handleMouse = (e: MouseEvent) => {
-      if (!gridRef.current) return;
-      const x = (e.clientX / window.innerWidth - 0.5) * 3;
-      const y = (e.clientY / window.innerHeight - 0.5) * 3;
-      gridRef.current.style.transform = `translate(${x}px, ${y}px)`;
-    };
-    window.addEventListener("mousemove", handleMouse, { passive: true });
-    return () => window.removeEventListener("mousemove", handleMouse);
-  }, []);
+    setMounted(true)
+  }, [])
+
+  const onMouseMove = useCallback((e: MouseEvent) => {
+    // Parallax on text
+    if (textRef.current) {
+      const nx = (e.clientX / window.innerWidth - 0.5) * 24
+      const ny = (e.clientY / window.innerHeight - 0.5) * 16
+      textRef.current.style.transform = `translate(${nx}px, ${ny}px)`
+    }
+    // Store normalized mouse for 3D scene
+    mouseRef.current.x = (e.clientX / window.innerWidth - 0.5) * 2
+    mouseRef.current.y = -(e.clientY / window.innerHeight - 0.5) * 2
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('mousemove', onMouseMove)
+    return () => window.removeEventListener('mousemove', onMouseMove)
+  }, [onMouseMove])
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center pt-24 pb-16 px-6 md:px-[7vw] overflow-hidden"
+      className="relative w-full overflow-hidden"
+      style={{ height: '100svh', minHeight: '600px' }}
     >
-      {/* Engineering grid background */}
-      <div
-        ref={gridRef}
-        className="engineering-grid absolute inset-[-10%] pointer-events-none transition-transform duration-75 ease-out"
-        aria-hidden="true"
-      />
+      {/* Three.js canvas — full background */}
+      {mounted && <HeroScene mouseRef={mouseRef} />}
 
-      <div className="relative z-10 w-full max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-        {/* Left: Hero text */}
-        <div>
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0}
-            className="flex items-center gap-2 mb-6"
+      {/* Content */}
+      <div className="relative z-10 h-full flex flex-col justify-center px-[8vw] md:px-[12vw]">
+        <div ref={textRef} style={{ transition: 'transform 0.1s linear', willChange: 'transform' }}>
+          {/* Name */}
+          <div
+            className="leading-[0.85] font-bold select-none"
+            style={{
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: 'clamp(72px, 14vw, 180px)',
+              letterSpacing: '-0.03em',
+              color: '#F4F1EA',
+            }}
           >
-            <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse-dot" />
-            <span className="font-mono text-xs tracking-widest uppercase text-[var(--muted)]">
-              Available for Opportunities
-            </span>
-          </motion.div>
+            <div>AJAI</div>
+            <div>KUMAR</div>
+          </div>
 
-          <motion.h1
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.1}
-            className="text-[clamp(2.75rem,7vw,5.25rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-[var(--text)] mb-6"
+          {/* Role */}
+          <div
+            className="mt-6"
+            style={{
+              fontFamily: 'IBM Plex Mono, monospace',
+              fontSize: '13px',
+              letterSpacing: '0.2em',
+              color: '#B8FF3D',
+            }}
           >
-            I build software systems that solve real problems.
-          </motion.h1>
+            AI ENGINEER / SYSTEM BUILDER
+          </div>
 
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.2}
-            className="text-[1.0625rem] text-[var(--muted)] leading-relaxed mb-10 max-w-md"
+          {/* Tagline */}
+          <div
+            className="mt-6 max-w-[420px]"
+            style={{
+              fontFamily: 'Space Grotesk, sans-serif',
+              fontSize: 'clamp(15px, 2.2vw, 22px)',
+              color: 'rgba(244,241,234,0.6)',
+              lineHeight: 1.5,
+            }}
           >
-            Computer Science + AI engineer building backend platforms,
-            intelligent applications and production-oriented systems.
-          </motion.p>
+            I BUILD INTELLIGENT<br />
+            SYSTEMS THAT OPERATE<br />
+            IN THE REAL WORLD.
+          </div>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.3}
-            className="flex flex-wrap gap-3"
-          >
-            <Link
-              href="/#work"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--accent)] text-white text-sm font-medium rounded-full hover:bg-[var(--accent-dark)] transition-colors duration-200"
+          {/* CTAs */}
+          <div className="mt-10 flex items-center gap-6 flex-wrap">
+            <button
+              onClick={() => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' })}
+              className="magnetic px-6 py-3 text-[#050505] bg-[#B8FF3D] font-medium tracking-widest hover:bg-[#F4F1EA] transition-colors"
+              style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', letterSpacing: '0.15em' }}
             >
-              View my work
-              <ArrowRight size={15} />
-            </Link>
+              VIEW WORK →
+            </button>
             <a
               href="https://github.com/ajaikumarN"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-[var(--border)] text-[var(--text)] text-sm font-medium rounded-full hover:border-[var(--text)] transition-colors duration-200"
+              className="magnetic border border-[rgba(244,241,234,0.2)] px-6 py-3 text-[rgba(244,241,234,0.6)] hover:text-[#F4F1EA] hover:border-[#F4F1EA] transition-colors"
+              style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', letterSpacing: '0.15em' }}
             >
-              GitHub
-              <ArrowUpRight size={15} />
+              GITHUB ↗
             </a>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Right: System status panel */}
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.2}
-          className="hidden md:block"
+        {/* Scroll indicator */}
+        <div
+          className="absolute bottom-8 left-[8vw] md:left-[12vw]"
+          style={{
+            fontFamily: 'IBM Plex Mono, monospace',
+            fontSize: '10px',
+            letterSpacing: '0.15em',
+            color: 'rgba(244,241,234,0.25)',
+          }}
         >
-          <div className="border border-[var(--border)] bg-[var(--surface)] p-6 rounded-2xl font-mono text-sm max-w-sm ml-auto">
-            <div className="flex items-center justify-between mb-6 pb-4 border-b border-[var(--border)]">
-              <span className="text-xs tracking-widest uppercase text-[var(--muted)]">
-                AJAI.SYSTEM
-              </span>
-              <span className="flex items-center gap-1.5 text-xs text-[var(--accent)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse-dot" />
-                ONLINE
-              </span>
-            </div>
-
-            <div className="mb-5">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-2 h-2 rounded-full bg-[var(--accent)]" />
-                <span className="text-xs tracking-widest uppercase text-[var(--accent)] font-semibold">
-                  AVAILABLE
-                </span>
-              </div>
-              <div className="space-y-1.5 pl-4">
-                {["AI ENGINEERING", "BACKEND SYSTEMS", "PRODUCT DEVELOPMENT"].map(
-                  (item) => (
-                    <div
-                      key={item}
-                      className="text-xs tracking-wider text-[var(--muted)]"
-                    >
-                      {item}
-                    </div>
-                  )
-                )}
-              </div>
-            </div>
-
-            <div className="border-t border-[var(--border)] pt-4 mb-5">
-              <div className="text-xs text-[var(--muted)] tracking-wide">
-                India / 2026
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <Image
-                src="/mypic.png"
-                alt="Ajai Kumar N"
-                width={48}
-                height={48}
-                className="rounded-full object-cover border border-[var(--border)]"
-              />
-              <div className="flex gap-3">
-                <a
-                  href="https://github.com/ajaikumarN"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--muted)] hover:text-[var(--text)] transition-colors"
-                  aria-label="GitHub"
-                >
-                  <Github size={16} />
-                </a>
-                <a
-                  href="https://linkedin.com/in/ajaikumarn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[var(--muted)] hover:text-[var(--text)] transition-colors"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin size={16} />
-                </a>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+          SCROLL ↓
+        </div>
       </div>
     </section>
-  );
+  )
 }

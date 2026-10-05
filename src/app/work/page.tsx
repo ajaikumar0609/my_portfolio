@@ -1,136 +1,119 @@
-import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import type { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: "Work — Ajai Kumar",
-  description: "Projects and systems built by Ajai Kumar — backend platforms, AI applications, and real-world engineering.",
-};
+  title: 'Work — Ajai Kumar',
+  description: 'Selected engineering work: Yamini Infotech ERP, Kavya Transports Fleet Intelligence, UZHAVAN AI.',
+}
 
-const projects = [
+const works = [
   {
-    number: "01",
-    name: "Yamini Infotech ERP",
-    category: "Enterprise / Backend",
-    year: "2024",
-    description:
-      "Real-time employee GPS tracking, attendance automation, and centralized operational dashboards for 247+ field staff. Full-stack platform with FastAPI backend and Flutter mobile app.",
-    stack: ["FastAPI", "PostgreSQL", "Flutter", "GPS", "Python", "Background Services"],
-    status: "Production · Live",
-    href: "/work/yamini",
-    accentColor: "#15B87A",
+    num: '01',
+    href: '/work/yamini',
+    name: 'YAMINI INFOTECH ERP',
+    type: 'ENTERPRISE ERP',
+    desc: 'GPS tracking, automated attendance, and operations management for 247+ field employees.',
+    stack: ['FASTAPI', 'POSTGRESQL', 'GPS', 'FLUTTER'],
+    status: 'PRODUCTION',
+    accent: '#B8FF3D',
   },
   {
-    number: "02",
-    name: "Kavya Transports",
-    category: "Fleet / Logistics",
-    year: "2024",
-    description:
-      "Fleet intelligence platform for real-world logistics operations. GPS vehicle tracking, trip management, route monitoring, and live operational dashboards.",
-    stack: ["GPS", "Maps", "Fleet Management", "Real-time", "FastAPI"],
-    status: "Production",
-    href: "/work/kavya",
-    accentColor: "#2563EB",
+    num: '02',
+    href: '/work/kavya',
+    name: 'KAVYA TRANSPORTS',
+    type: 'FLEET INTELLIGENCE',
+    desc: 'Real-time fleet tracking, trip management, and logistics operations platform.',
+    stack: ['GPS', 'MAPS', 'FLEET', 'REALTIME'],
+    status: 'PRODUCTION',
+    accent: '#4DE8FF',
   },
   {
-    number: "03",
-    name: "UZHAVAN AI",
-    category: "AI / Agriculture",
-    year: "2025",
-    description:
-      "Tamil-first agricultural intelligence platform combining crop intelligence, weather analysis, disease detection, yield prediction, and data-driven decision support for farmers.",
-    stack: ["Python", "ML", "NLP", "Agriculture", "Tamil", "LLM", "Computer Vision"],
-    status: "In Progress",
-    href: "/work/uzhavan",
-    accentColor: "#7C3AED",
+    num: '03',
+    href: '/work/uzhavan',
+    name: 'UZHAVAN AI',
+    type: 'AGRICULTURAL AI',
+    desc: 'Tamil-first intelligent platform: crop advisory, disease detection, yield prediction.',
+    stack: ['PYTHON', 'ML', 'NLP', 'CV', 'TAMIL'],
+    status: 'IN DEVELOPMENT',
+    accent: '#B8FF3D',
   },
-];
+]
 
 export default function WorkPage() {
   return (
-    <>
-      <Navbar />
-      <main className="pt-28 pb-16 px-6 md:px-[7vw] min-h-screen">
-        <div className="max-w-6xl mx-auto">
-          <div className="mb-14">
-            <p className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-3">
-              SELECTED WORK
-            </p>
-            <h1 className="text-[clamp(2rem,4vw,3.5rem)] font-semibold tracking-[-0.02em] text-[var(--text)]">
-              Systems built, shipped, tested.
-            </h1>
-          </div>
+    <main style={{ background: '#050505', color: '#F4F1EA', minHeight: '100vh', padding: '0 0 120px' }}>
+      <div className="px-[8vw] pt-10">
+        <Link href="/" style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.35)', textDecoration: 'none' }}>
+          ← HOME
+        </Link>
+      </div>
 
-          <div className="space-y-px">
-            {projects.map((project) => (
-              <Link
-                key={project.number}
-                href={project.href}
-                className="group block border border-[var(--border)] bg-white rounded-xl p-7 hover:border-[var(--text)]/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm"
-              >
-                <div className="flex items-start gap-5">
-                  <span className="font-mono text-xs text-[var(--muted)] tracking-widest w-5 shrink-0 mt-1">
-                    {project.number}
-                  </span>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4 mb-3">
-                      <div>
-                        <h2 className="text-xl font-semibold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors duration-200 mb-1">
-                          {project.name}
-                        </h2>
-                        <div className="flex items-center gap-3">
-                          <span className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)]">
-                            {project.category}
-                          </span>
-                          <span className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)]">
-                            ·
-                          </span>
-                          <span className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)]">
-                            {project.year}
-                          </span>
-                          <span
-                            className="font-mono text-[0.5625rem] tracking-widest uppercase px-2 py-0.5 rounded border"
-                            style={{
-                              color: project.accentColor,
-                              borderColor: `${project.accentColor}40`,
-                              backgroundColor: `${project.accentColor}10`,
-                            }}
-                          >
-                            {project.status}
-                          </span>
-                        </div>
-                      </div>
-                      <ArrowUpRight
-                        size={18}
-                        className="text-[var(--muted)] group-hover:text-[var(--accent)] transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0 mt-0.5"
-                      />
-                    </div>
-
-                    <p className="text-sm text-[var(--muted)] leading-relaxed mb-4 max-w-2xl">
-                      {project.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {project.stack.map((s) => (
-                        <span
-                          key={s}
-                          className="font-mono text-[0.5625rem] tracking-wide uppercase px-2 py-0.5 bg-[var(--bg)] border border-[var(--border)] text-[var(--muted)] rounded"
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
+      <div className="px-[8vw] pt-20 pb-16" style={{ borderBottom: '1px solid rgba(244,241,234,0.06)' }}>
+        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D', marginBottom: '16px' }}>
+          SELECTED WORK
         </div>
-      </main>
-      <Footer />
-    </>
-  );
+        <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(48px, 8vw, 100px)', fontWeight: 700, letterSpacing: '-0.03em', color: '#F4F1EA', lineHeight: 0.9 }}>
+          SYSTEMS<br />BUILT
+        </div>
+      </div>
+
+      <div className="px-[8vw]">
+        {works.map((work, i) => (
+          <Link
+            key={work.num}
+            href={work.href}
+            className="block group"
+            style={{ textDecoration: 'none' }}
+          >
+            <div
+              className="py-12 flex flex-col md:flex-row md:items-center gap-8 transition-all"
+              style={{
+                borderBottom: '1px solid rgba(244,241,234,0.06)',
+                paddingLeft: '0',
+              }}
+            >
+              {/* Number */}
+              <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', letterSpacing: '0.2em', color: 'rgba(244,241,234,0.2)', flexShrink: 0, width: '40px' }}>
+                {work.num}
+              </div>
+
+              {/* Main content */}
+              <div className="flex-1">
+                <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: work.accent, opacity: 0.6, marginBottom: '6px' }}>
+                  {work.type}
+                </div>
+                <div
+                  className="group-hover:text-[#B8FF3D] transition-colors"
+                  style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(22px, 3vw, 36px)', fontWeight: 600, letterSpacing: '-0.02em', color: '#F4F1EA', marginBottom: '8px' }}
+                >
+                  {work.name}
+                </div>
+                <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '14px', color: 'rgba(244,241,234,0.4)', lineHeight: 1.6 }}>
+                  {work.desc}
+                </div>
+              </div>
+
+              {/* Stack + status */}
+              <div className="flex flex-col items-start md:items-end gap-3 flex-shrink-0">
+                <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '9px', letterSpacing: '0.15em', color: work.status === 'PRODUCTION' ? '#B8FF3D' : 'rgba(244,241,234,0.3)' }}>
+                  {work.status === 'PRODUCTION' && <span className="mr-2">●</span>}{work.status}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {work.stack.map(t => (
+                    <span key={t} style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '9px', letterSpacing: '0.1em', color: 'rgba(244,241,234,0.25)', border: '1px solid rgba(244,241,234,0.08)', padding: '3px 8px' }}>{t}</span>
+                  ))}
+                </div>
+                <div
+                  className="group-hover:gap-3 transition-all"
+                  style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.25)', display: 'flex', alignItems: 'center', gap: '8px' }}
+                >
+                  VIEW →
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </main>
+  )
 }

@@ -9,42 +9,47 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        bg: "#F7F7F5",
-        surface: "#FFFFFF",
-        "text-primary": "#111111",
-        muted: "#686868",
-        border: "#D9D9D4",
-        accent: "#15B87A",
-        "accent-dark": "#087A55",
+        bg: "#050505",
+        surface: "#0d0d0d",
+        "text-primary": "#F4F1EA",
+        muted: "rgba(244,241,234,0.4)",
+        border: "rgba(244,241,234,0.08)",
+        lime: "#B8FF3D",
+        cyan: "#4DE8FF",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", "Inter", "system-ui", "sans-serif"],
-        mono: ["var(--font-jetbrains-mono)", "JetBrains Mono", "monospace"],
-      },
-      fontSize: {
-        "hero": ["clamp(3rem,8vw,5.75rem)", { lineHeight: "1.0", letterSpacing: "-0.03em" }],
-        "hero-sm": ["clamp(2.5rem,6vw,4rem)", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
-        "section": ["clamp(2rem,3.5vw,3.25rem)", { lineHeight: "1.1", letterSpacing: "-0.02em" }],
-      },
-      spacing: {
-        "section": "7rem",
-        "section-sm": "4rem",
-      },
-      borderRadius: {
-        "pill": "9999px",
+        sans: ["var(--font-space-grotesk)", "Space Grotesk", "system-ui", "sans-serif"],
+        mono: ["var(--font-ibm-plex-mono)", "IBM Plex Mono", "monospace"],
       },
       animation: {
-        "blink": "blink 1s step-end infinite",
-        "pulse-dot": "pulse-dot 2s ease-in-out infinite",
+        "blink": "blink 1.2s step-end infinite",
+        "orbit-1": "orbit 12s linear infinite",
+        "orbit-2": "orbit 20s linear infinite reverse",
+        "orbit-3": "orbit 30s linear infinite",
+        "pulse-gps": "pulse-gps 2s ease-in-out infinite",
+        "dash": "dash 3s linear infinite",
+        "vehicle-move": "vehicle-move 4s linear infinite",
       },
       keyframes: {
         blink: {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0" },
         },
-        "pulse-dot": {
-          "0%, 100%": { opacity: "1", transform: "scale(1)" },
-          "50%": { opacity: "0.6", transform: "scale(0.9)" },
+        orbit: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "pulse-gps": {
+          "0%": { transform: "scale(1)", opacity: "0.8" },
+          "100%": { transform: "scale(2.5)", opacity: "0" },
+        },
+        dash: {
+          "0%": { strokeDashoffset: "100" },
+          "100%": { strokeDashoffset: "0" },
+        },
+        "vehicle-move": {
+          "0%": { offsetDistance: "0%" },
+          "100%": { offsetDistance: "100%" },
         },
       },
     },

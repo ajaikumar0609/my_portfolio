@@ -1,129 +1,120 @@
-"use client";
+'use client'
 
-import { motion } from "framer-motion";
+import Image from 'next/image'
 
-const traits = [
-  "SYSTEM THINKING",
-  "BACKEND ENGINEERING",
-  "AI / ML",
-  "PRODUCT DEVELOPMENT",
-];
+const traits = ['SYSTEM THINKING', 'BACKEND ENGINEERING', 'AI / ML', 'PRODUCT DEV']
 
 export default function About() {
   return (
-    <section id="about" className="py-24 px-6 md:px-[7vw] bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 items-start">
-          <div>
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-6"
-            >
-              ABOUT
-            </motion.p>
-
-            <motion.blockquote
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.05 }}
-              className="text-[clamp(1.5rem,2.5vw,2.25rem)] font-semibold tracking-[-0.02em] leading-[1.2] text-[var(--text)] mb-8 border-l-2 border-[var(--accent)] pl-5"
-            >
-              I like building things that have to work outside the demo.
-            </motion.blockquote>
-
-            <div className="space-y-4 text-[var(--muted)] leading-relaxed">
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                I'm a Computer Science and AI student at Karunya Institute of
-                Technology and Sciences, focused on building systems that work
-                in production — not just in development environments.
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-              >
-                I built a production ERP system for Yamini Infotech — handling
-                real-time GPS tracking for 247+ field employees, automated
-                attendance, and operational dashboards. That's the kind of
-                engineering I care about: systems that run reliably for real
-                clients, under real conditions.
-              </motion.p>
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                I've interned at Icanio Tech School (AI development) and
-                LifeChangers IND (full stack), and I'm currently building
-                UZHAVAN AI — a Tamil-first agricultural intelligence platform.
-                My focus is AI, backend infrastructure, and the intersection
-                between them.
-              </motion.p>
-            </div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-          >
-            <div className="border border-[var(--border)] rounded-xl p-6 bg-[var(--bg)]">
-              <p className="font-mono text-[0.6875rem] tracking-widest uppercase text-[var(--muted)] mb-5">
-                TECHNICAL IDENTITY
-              </p>
-              <div className="space-y-3">
-                {traits.map((trait, i) => (
-                  <div
-                    key={trait}
-                    className="flex items-center gap-3 group"
-                  >
-                    {i < traits.length - 1 && (
-                      <>
-                        <div className="h-8 flex items-center">
-                          <span className="font-mono text-sm tracking-wide text-[var(--text)] group-hover:text-[var(--accent)] transition-colors duration-200">
-                            {trait}
-                          </span>
-                        </div>
-                        <span className="font-mono text-[var(--border)] text-lg">+</span>
-                      </>
-                    )}
-                    {i === traits.length - 1 && (
-                      <span className="font-mono text-sm tracking-wide text-[var(--text)] group-hover:text-[var(--accent)] transition-colors duration-200">
-                        {trait}
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 pt-5 border-t border-[var(--border)] space-y-2">
-                {[
-                  { label: "Education", value: "Karunya Institute · CS + AI" },
-                  { label: "Location", value: "Tirunelveli, India" },
-                  { label: "Status", value: "Available · 2026" },
-                ].map(({ label, value }) => (
-                  <div key={label} className="flex justify-between text-sm">
-                    <span className="text-[var(--muted)]">{label}</span>
-                    <span className="text-[var(--text)] font-medium">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+    <section id="about" className="py-32 px-[8vw] md:px-[12vw]">
+      {/* Opening statement */}
+      <div className="mb-24 max-w-[900px]">
+        <div
+          style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontSize: 'clamp(28px, 4vw, 52px)',
+            fontWeight: 600,
+            letterSpacing: '-0.02em',
+            color: '#F4F1EA',
+            lineHeight: 1.2,
+          }}
+        >
+          "I LIKE BUILDING THINGS THAT HAVE TO WORK OUTSIDE THE DEMO."
         </div>
       </div>
+
+      {/* Two-column layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-20">
+        {/* Text */}
+        <div>
+          <div
+            className="mb-3"
+            style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D' }}
+          >
+            03 / ABOUT
+          </div>
+          <div
+            className="mb-5"
+            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '16px', color: 'rgba(244,241,234,0.65)', lineHeight: 1.85 }}
+          >
+            I&rsquo;m a Computer Science + AI student at Karunya Institute of Technology and Sciences,
+            building production systems that operate in real operational environments &mdash; not just in
+            controlled demos.
+          </div>
+          <div
+            className="mb-5"
+            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '16px', color: 'rgba(244,241,234,0.65)', lineHeight: 1.85 }}
+          >
+            At Yamini Infotech, I engineered a full ERP platform with real-time GPS tracking,
+            automated attendance, and operations management for 247+ field employees &mdash; a system
+            that runs continuously in production.
+          </div>
+          <div
+            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '16px', color: 'rgba(244,241,234,0.65)', lineHeight: 1.85 }}
+          >
+            UZHAVAN AI is my current focus: a Tamil-first agricultural intelligence platform
+            combining ML, computer vision, and domain knowledge to give real advice to real farmers.
+            AI built for the field, not for the lab.
+          </div>
+        </div>
+
+        {/* Photo with holographic treatment */}
+        <div className="relative">
+          <div
+            className="relative overflow-hidden"
+            style={{ border: '1px solid rgba(244,241,234,0.08)' }}
+          >
+            <Image
+              src="/mypic.png"
+              alt="Ajai Kumar N"
+              width={500}
+              height={650}
+              className="w-full object-cover"
+              style={{ filter: 'contrast(1.05) brightness(0.9)', display: 'block' }}
+            />
+            {/* Scanline overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(77,232,255,0.025) 2px, rgba(77,232,255,0.025) 4px)',
+              }}
+            />
+            {/* Edge glow */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{ boxShadow: 'inset 0 0 60px rgba(184,255,61,0.05)' }}
+            />
+          </div>
+          {/* Tag */}
+          <div
+            className="mt-4"
+            style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.3)' }}
+          >
+            AJAI KUMAR N · TIRUNELVELI, INDIA
+          </div>
+        </div>
+      </div>
+
+      {/* Trait blocks */}
+      <div className="flex items-center flex-wrap gap-4 pt-8" style={{ borderTop: '1px solid rgba(244,241,234,0.06)' }}>
+        {traits.map((trait, i) => (
+          <div key={trait} className="flex items-center gap-4">
+            {i > 0 && (
+              <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '20px', color: 'rgba(244,241,234,0.15)', fontWeight: 300 }}>+</span>
+            )}
+            <span
+              style={{
+                fontFamily: 'IBM Plex Mono, monospace',
+                fontSize: '11px',
+                letterSpacing: '0.2em',
+                color: 'rgba(244,241,234,0.5)',
+              }}
+            >
+              {trait}
+            </span>
+          </div>
+        ))}
+      </div>
     </section>
-  );
+  )
 }
