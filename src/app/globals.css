@@ -1,18 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-space-grotesk: 'Space Grotesk', system-ui, sans-serif;
-  --font-ibm-plex-mono: 'IBM Plex Mono', monospace;
   --bg: #050505;
   --text: #F4F1EA;
   --lime: #B8FF3D;
   --cyan: #4DE8FF;
-  --muted: rgba(244,241,234,0.4);
-  --border: rgba(244,241,234,0.08);
+  --muted: rgba(244,241,234,0.5);
+  --border: rgba(244,241,234,0.12);
+  --surface: #0d0d0d;
+  --hero-name-size: clamp(5rem, min(23vw, 24svh), 17rem);
+  --world-yamini: #070b06;
+  --world-kavya: #05080f;
+  --world-uzhavan: #0b0904;
 }
 
 * {
@@ -22,7 +23,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  position: relative;
 }
 
 body {
@@ -30,8 +31,11 @@ body {
   color: #F4F1EA;
   font-family: var(--font-space-grotesk);
   overflow-x: hidden;
-  cursor: none;
+  position: relative;
 }
+
+html.has-custom-cursor, html.has-custom-cursor a, html.has-custom-cursor button, html.has-custom-cursor [role="button"], html.has-custom-cursor canvas { cursor: none; }
+html.has-custom-cursor input, html.has-custom-cursor textarea { cursor: text; }
 
 /* Grain overlay */
 body::before {
@@ -54,11 +58,6 @@ body::before {
 ::-webkit-scrollbar-thumb {
   background: #B8FF3D;
   border-radius: 2px;
-}
-
-/* Cursor: none on all interactive elements */
-a, button, [role="button"] {
-  cursor: none;
 }
 
 /* Selection */
@@ -160,4 +159,14 @@ p { color: rgba(244,241,234,0.7); }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Visible keyboard focus */
+:focus-visible {
+  outline: 1px solid #B8FF3D;
+  outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+  :root { --hero-name-size: clamp(6rem, min(17vw, 27svh), 17rem); }
 }

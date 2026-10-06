@@ -8,7 +8,7 @@ export default function StatusStrip() {
         background: 'rgba(244,241,234,0.02)',
         borderTop: '1px solid rgba(244,241,234,0.07)',
         borderBottom: '1px solid rgba(244,241,234,0.07)',
-        fontFamily: 'IBM Plex Mono, monospace',
+        fontFamily: 'var(--font-ibm-plex-mono), monospace',
         fontSize: '10px',
         letterSpacing: '0.12em',
       }}
@@ -24,7 +24,7 @@ export default function StatusStrip() {
 
       {/* Tags */}
       <div className="flex items-center gap-3 flex-wrap">
-        {['AI', 'BACKEND', 'FULL STACK', 'SYSTEMS', 'ML'].map(tag => (
+        {['AI', 'BACKEND', 'SYSTEMS', 'ML'].map(tag => (
           <span
             key={tag}
             style={{ color: 'rgba(244,241,234,0.35)' }}
@@ -36,7 +36,7 @@ export default function StatusStrip() {
 
       {/* Location */}
       <div style={{ color: 'rgba(244,241,234,0.3)' }}>
-        INDIA / 2026 / AVAILABLE
+        INDIA · 2026 · SOFTWARE ENGINEERING
       </div>
     </div>
   )

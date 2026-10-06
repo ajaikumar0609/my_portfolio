@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
+import { Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import Chrome from "@/components/Chrome";
+
+const sans = Space_Grotesk({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-space-grotesk", display: "swap" });
+const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["300", "400", "500", "600"], variable: "--font-ibm-plex-mono", display: "swap" });
 
 export const metadata: Metadata = {
   title: "Ajai Kumar — AI Engineer & Backend Developer",
@@ -28,13 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet" />
-      </head>
-      <body>{children}</body>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+      <body className="font-sans">
+        <Chrome />
+        {children}
+      </body>
     </html>
   );
 }

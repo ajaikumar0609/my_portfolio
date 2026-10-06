@@ -49,13 +49,13 @@ export default function SkillsOrbit() {
   const [paused, setPaused] = useState(false)
 
   return (
-    <section className="py-32 px-[8vw] relative overflow-hidden" style={{ minHeight: '700px' }}>
+    <section id="stack" data-nav="stack" className="py-32 px-[8vw] relative overflow-hidden" style={{ minHeight: '700px' }}>
       {/* Section label */}
       <div className="mb-16 text-center">
-        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D' }} className="mb-3">
+        <div style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D' }} className="mb-3">
           04 / TOOLS &amp; SKILLS
         </div>
-        <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, letterSpacing: '-0.03em', color: '#F4F1EA', lineHeight: 1 }}>
+        <div style={{ fontFamily: 'var(--font-space-grotesk), sans-serif', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, letterSpacing: '-0.03em', color: '#F4F1EA', lineHeight: 1 }}>
           THE STACK
         </div>
       </div>
@@ -99,7 +99,7 @@ export default function SkillsOrbit() {
                 >
                   <span
                     className="cursor-none text-[rgba(244,241,234,0.5)] hover:text-[#B8FF3D] transition-colors whitespace-nowrap px-2 py-1"
-                    style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.12em' }}
+                    style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '10px', letterSpacing: '0.12em' }}
                   >
                     {skill.name}
                   </span>
@@ -113,7 +113,7 @@ export default function SkillsOrbit() {
         <div className="absolute z-10 text-center pointer-events-none">
           <div
             style={{
-              fontFamily: 'Space Grotesk, sans-serif',
+              fontFamily: 'var(--font-space-grotesk), sans-serif',
               fontSize: '28px',
               fontWeight: 700,
               letterSpacing: '-0.02em',
@@ -124,7 +124,7 @@ export default function SkillsOrbit() {
           </div>
           <div
             style={{
-              fontFamily: 'IBM Plex Mono, monospace',
+              fontFamily: 'var(--font-ibm-plex-mono), monospace',
               fontSize: '9px',
               letterSpacing: '0.2em',
               color: '#B8FF3D',
@@ -149,12 +149,12 @@ export default function SkillsOrbit() {
             minWidth: '160px',
           }}
         >
-          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', color: '#B8FF3D', letterSpacing: '0.1em', marginBottom: '8px' }}>
+          <div style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '11px', color: '#B8FF3D', letterSpacing: '0.1em', marginBottom: '8px' }}>
             {hoveredSkill.name}
           </div>
-          <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '9px', color: 'rgba(244,241,234,0.4)', letterSpacing: '0.1em', marginBottom: '4px' }}>USED IN:</div>
+          <div style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '9px', color: 'rgba(244,241,234,0.4)', letterSpacing: '0.1em', marginBottom: '4px' }}>USED IN:</div>
           {hoveredSkill.usedIn.map(p => (
-            <div key={p} style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '9px', color: 'rgba(244,241,234,0.6)', letterSpacing: '0.05em' }}>· {p}</div>
+            <div key={p} style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '9px', color: 'rgba(244,241,234,0.6)', letterSpacing: '0.05em' }}>· {p}</div>
           ))}
         </div>
       )}

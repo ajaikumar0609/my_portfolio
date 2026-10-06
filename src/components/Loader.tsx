@@ -1,111 +1,89 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-interface LoaderProps {
-  onComplete: () => void
-}
+const BOOT_MS = 1000
+const READY_MS = 250
+const FADE_MS = 350
 
-export default function Loader({ onComplete }: LoaderProps) {
-  const [progress, setProgress] = useState(0)
-  const [phase, setPhase] = useState<'loading' | 'ready' | 'done'>('loading')
+// Under 1.5s end to end. Skipped on repeat visits and under reduced motion.
+export default function Loader({ onComplete }: { onComplete: () => void }) {
+  const [phase, setPhase] = useState<'boot' | 'ready' | 'out' | 'done'>('boot')
+  const [pct, setPct] = useState(0)
+  const doneRef = useRef(onComplete)
+  doneRef.current = onComplete
 
   useEffect(() => {
-    // Check if already loaded this session
-    const alreadyLoaded = sessionStorage.getItem('ajai_loaded')
-    if (alreadyLoaded) {
+    let skip = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    try {
+      if (sessionStorage.getItem('ajai_loaded')) skip = true
+    } catch {}
+    if (skip) {
       setPhase('done')
-      onComplete()
+      doneRef.current()
       return
     }
 
-    // Animate progress
-    let p = 0
-    const interval = setInterval(() => {
-      p += Math.random() * 18 + 4
-      if (p >= 100) {
-        p = 100
-        setProgress(100)
-        clearInterval(interval)
-        setTimeout(() => {
-          setPhase('ready')
-          setTimeout(() => {
-            setPhase('done')
-            sessionStorage.setItem('ajai_loaded', '1')
-            onComplete()
-          }, 600)
-        }, 200)
-      } else {
-        setProgress(Math.floor(p))
-      }
-    }, 80)
+    const t0 = performance.now()
+    let raf = 0
+    const tick = (now: number) => {
+      const p = Math.min(1, (now - t0) / BOOT_MS)
+      setPct(Math.round((1 - Math.pow(1 - p, 2.2)) * 100))
+      if (p < 1) raf = requestAnimationFrame(tick)
+      else setPhase('ready')
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [])
 
-    return () => clearInterval(interval)
-  }, [onComplete])
+  useEffect(() => {
+    if (phase === 'ready') {
+      const id = setTimeout(() => {
+        setPhase('out')
+        try {
+          sessionStorage.setItem('ajai_loaded', '1')
+        } catch {}
+        doneRef.current()
+      }, READY_MS)
+      return () => clearTimeout(id)
+    }
+    if (phase === 'out') {
+      const id = setTimeout(() => setPhase('done'), FADE_MS)
+      return () => clearTimeout(id)
+    }
+  }, [phase])
 
   if (phase === 'done') return null
 
+  const mono = { fontFamily: 'var(--font-ibm-plex-mono), monospace' }
+
   return (
     <div
-      className="fixed inset-0 z-[10000] flex flex-col items-center justify-center"
+      role="status"
+      aria-live="polite"
+      aria-label="Loading AJAI.SYSTEM"
+      className="fixed inset-0 z-[10000]"
       style={{
         background: '#050505',
-        opacity: phase === 'ready' ? 0 : 1,
-        transition: 'opacity 0.5s ease',
-        pointerEvents: phase === 'ready' ? 'none' : 'all',
+        opacity: phase === 'out' ? 0 : 1,
+        transition: `opacity ${FADE_MS}ms ease`,
+        pointerEvents: phase === 'out' ? 'none' : 'auto',
       }}
     >
-      {/* Dot grid background */}
-      <div className="absolute inset-0 overflow-hidden opacity-20">
-        {Array.from({ length: 80 }).map((_, i) => (
+      <div className="absolute bottom-[8vh] left-[7vw] right-[7vw] max-w-[360px]" style={mono}>
+        <div style={{ fontSize: 11, letterSpacing: '0.22em', color: '#F4F1EA' }}>AJAI.SYSTEM</div>
+        <div
+          className="mt-2 flex justify-between"
+          style={{ fontSize: 10, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.5)' }}
+        >
+          <span>{phase === 'boot' ? 'INITIALIZING' : 'SYSTEM READY'}</span>
+          <span>{String(pct).padStart(3, '0')}</span>
+        </div>
+        <div className="mt-3 h-px w-full" style={{ background: 'rgba(244,241,234,0.12)' }}>
           <div
-            key={i}
-            className="absolute w-[2px] h-[2px] rounded-full bg-[#B8FF3D]"
-            style={{
-              left: `${(i % 10) * 10 + 5}%`,
-              top: `${Math.floor(i / 10) * 12.5 + 6}%`,
-              opacity: progress / 100,
-              transition: 'opacity 0.3s',
-            }}
+            className="h-px"
+            style={{ width: `${pct}%`, background: '#B8FF3D', transition: 'width 60ms linear' }}
           />
-        ))}
-      </div>
-
-      <div className="relative z-10 text-center">
-        <div
-          className="text-[#F4F1EA] mb-3 tracking-[0.3em]"
-          style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '13px' }}
-        >
-          AJAI.SYSTEM
-        </div>
-        <div
-          className="mb-8 tracking-[0.2em]"
-          style={{
-            fontFamily: 'IBM Plex Mono, monospace',
-            fontSize: '10px',
-            color: 'rgba(244,241,234,0.4)',
-          }}
-        >
-          {phase === 'ready' ? 'SYSTEM READY' : 'INITIALIZING...'}
-        </div>
-
-        {/* Progress bar */}
-        <div className="w-[240px] h-[1px] bg-[rgba(244,241,234,0.1)] mb-4 overflow-hidden">
-          <div
-            className="h-full bg-[#B8FF3D] transition-all duration-75"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-
-        <div
-          style={{
-            fontFamily: 'IBM Plex Mono, monospace',
-            fontSize: '10px',
-            color: 'rgba(244,241,234,0.3)',
-            letterSpacing: '0.1em',
-          }}
-        >
-          {progress.toString().padStart(3, '0')}
         </div>
       </div>
     </div>

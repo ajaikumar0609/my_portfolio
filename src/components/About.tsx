@@ -6,12 +6,12 @@ const traits = ['SYSTEM THINKING', 'BACKEND ENGINEERING', 'AI / ML', 'PRODUCT DE
 
 export default function About() {
   return (
-    <section id="about" className="py-32 px-[8vw] md:px-[12vw]">
+    <section id="about" data-nav="about" className="py-32 px-[8vw] md:px-[12vw]">
       {/* Opening statement */}
       <div className="mb-24 max-w-[900px]">
         <div
           style={{
-            fontFamily: 'Space Grotesk, sans-serif',
+            fontFamily: 'var(--font-space-grotesk), sans-serif',
             fontSize: 'clamp(28px, 4vw, 52px)',
             fontWeight: 600,
             letterSpacing: '-0.02em',
@@ -29,13 +29,13 @@ export default function About() {
         <div>
           <div
             className="mb-3"
-            style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D' }}
+            style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D' }}
           >
             03 / ABOUT
           </div>
           <div
             className="mb-5"
-            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '16px', color: 'rgba(244,241,234,0.65)', lineHeight: 1.85 }}
+            style={{ fontFamily: 'var(--font-space-grotesk), sans-serif', fontSize: '16px', color: 'rgba(244,241,234,0.65)', lineHeight: 1.85 }}
           >
             I&rsquo;m a Computer Science + AI student at Karunya Institute of Technology and Sciences,
             building production systems that operate in real operational environments &mdash; not just in
@@ -43,14 +43,14 @@ export default function About() {
           </div>
           <div
             className="mb-5"
-            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '16px', color: 'rgba(244,241,234,0.65)', lineHeight: 1.85 }}
+            style={{ fontFamily: 'var(--font-space-grotesk), sans-serif', fontSize: '16px', color: 'rgba(244,241,234,0.65)', lineHeight: 1.85 }}
           >
             At Yamini Infotech, I engineered a full ERP platform with real-time GPS tracking,
             automated attendance, and operations management for 247+ field employees &mdash; a system
             that runs continuously in production.
           </div>
           <div
-            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '16px', color: 'rgba(244,241,234,0.65)', lineHeight: 1.85 }}
+            style={{ fontFamily: 'var(--font-space-grotesk), sans-serif', fontSize: '16px', color: 'rgba(244,241,234,0.65)', lineHeight: 1.85 }}
           >
             UZHAVAN AI is my current focus: a Tamil-first agricultural intelligence platform
             combining ML, computer vision, and domain knowledge to give real advice to real farmers.
@@ -88,7 +88,7 @@ export default function About() {
           {/* Tag */}
           <div
             className="mt-4"
-            style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.3)' }}
+            style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.3)' }}
           >
             AJAI KUMAR N · TIRUNELVELI, INDIA
           </div>
@@ -100,11 +100,11 @@ export default function About() {
         {traits.map((trait, i) => (
           <div key={trait} className="flex items-center gap-4">
             {i > 0 && (
-              <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '20px', color: 'rgba(244,241,234,0.15)', fontWeight: 300 }}>+</span>
+              <span style={{ fontFamily: 'var(--font-space-grotesk), sans-serif', fontSize: '20px', color: 'rgba(244,241,234,0.15)', fontWeight: 300 }}>+</span>
             )}
             <span
               style={{
-                fontFamily: 'IBM Plex Mono, monospace',
+                fontFamily: 'var(--font-ibm-plex-mono), monospace',
                 fontSize: '11px',
                 letterSpacing: '0.2em',
                 color: 'rgba(244,241,234,0.5)',

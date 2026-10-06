@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="480" height="480"><rect width="480" height="480" fill="#060a05"/>
+<rect x="0.5" y="0.5" width="479" height="479" fill="none" stroke="#B8FF3D" stroke-opacity="0.2"/>
+<circle cx="240" cy="220" r="40" fill="none" stroke="#B8FF3D" stroke-opacity="0.28" stroke-width="1.5"/><circle cx="240" cy="220" r="90" fill="none" stroke="#B8FF3D" stroke-opacity="0.28" stroke-width="1.5"/><circle cx="240" cy="220" r="140" fill="none" stroke="#B8FF3D" stroke-opacity="0.28" stroke-width="1.5"/><circle cx="240" cy="220" r="8" fill="#B8FF3D"/>
+<text x="28" y="48" font-family="monospace" font-size="15" letter-spacing="3" fill="#B8FF3D">YAMINI / GPS</text>
+<rect x="24" y="428" width="104" height="28" fill="#050505" stroke="#F4F1EA" stroke-opacity="0.5"/>
+<text x="76" y="447" text-anchor="middle" font-family="monospace" font-size="13" letter-spacing="3" fill="#F4F1EA">CONCEPT</text></svg>

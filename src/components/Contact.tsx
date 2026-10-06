@@ -4,13 +4,14 @@ export default function Contact() {
   return (
     <section
       id="contact"
+      data-nav="contact"
       className="relative flex flex-col items-center justify-center text-center"
       style={{ minHeight: '100svh', padding: '80px 8vw' }}
     >
       {/* Huge headline */}
       <div
         style={{
-          fontFamily: 'Space Grotesk, sans-serif',
+          fontFamily: 'var(--font-space-grotesk), sans-serif',
           fontSize: 'clamp(52px, 10vw, 130px)',
           fontWeight: 700,
           letterSpacing: '-0.04em',
@@ -26,7 +27,7 @@ export default function Contact() {
       <div
         className="mb-16"
         style={{
-          fontFamily: 'IBM Plex Mono, monospace',
+          fontFamily: 'var(--font-ibm-plex-mono), monospace',
           fontSize: '11px',
           letterSpacing: '0.25em',
           color: 'rgba(244,241,234,0.35)',
@@ -42,7 +43,7 @@ export default function Contact() {
           className="magnetic group"
           data-cursor="explore"
           style={{
-            fontFamily: 'IBM Plex Mono, monospace',
+            fontFamily: 'var(--font-ibm-plex-mono), monospace',
             fontSize: '12px',
             letterSpacing: '0.15em',
             color: 'rgba(244,241,234,0.5)',
@@ -67,7 +68,7 @@ export default function Contact() {
           rel="noopener noreferrer"
           className="magnetic group"
           style={{
-            fontFamily: 'IBM Plex Mono, monospace',
+            fontFamily: 'var(--font-ibm-plex-mono), monospace',
             fontSize: '12px',
             letterSpacing: '0.15em',
             color: 'rgba(244,241,234,0.5)',
@@ -92,7 +93,7 @@ export default function Contact() {
           rel="noopener noreferrer"
           className="magnetic group"
           style={{
-            fontFamily: 'IBM Plex Mono, monospace',
+            fontFamily: 'var(--font-ibm-plex-mono), monospace',
             fontSize: '12px',
             letterSpacing: '0.15em',
             color: 'rgba(244,241,234,0.5)',
@@ -116,16 +117,16 @@ export default function Contact() {
       {/* Location / availability */}
       <div
         className="mt-16"
-        style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.2)' }}
+        style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.2)' }}
       >
-        INDIA · AVAILABLE FOR INTERNSHIPS / OPPORTUNITIES
+        INDIA · 2026 · SOFTWARE ENGINEERING
       </div>
 
       {/* Footer */}
       <div
         className="absolute bottom-8"
         style={{
-          fontFamily: 'IBM Plex Mono, monospace',
+          fontFamily: 'var(--font-ibm-plex-mono), monospace',
           fontSize: '10px',
           letterSpacing: '0.12em',
           color: 'rgba(244,241,234,0.15)',

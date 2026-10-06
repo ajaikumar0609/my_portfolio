@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="480" height="480"><rect width="480" height="480" fill="#060a05"/>
+<rect x="0.5" y="0.5" width="479" height="479" fill="none" stroke="#B8FF3D" stroke-opacity="0.2"/>
+<rect x="190" y="110" width="100" height="200" rx="14" fill="none" stroke="#B8FF3D" stroke-width="2"/><line x1="215" y1="132" x2="265" y2="132" fill="none" stroke="#B8FF3D" stroke-opacity="0.28" stroke-width="1.5"/><circle cx="240" cy="276" r="6" fill="#B8FF3D"/>
+<text x="28" y="48" font-family="monospace" font-size="15" letter-spacing="3" fill="#B8FF3D">YAMINI / MOBILE</text>
+<rect x="24" y="428" width="104" height="28" fill="#050505" stroke="#F4F1EA" stroke-opacity="0.5"/>
+<text x="76" y="447" text-anchor="middle" font-family="monospace" font-size="13" letter-spacing="3" fill="#F4F1EA">CONCEPT</text></svg>

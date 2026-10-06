@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="480" height="480"><rect width="480" height="480" fill="#04070d"/>
+<rect x="0.5" y="0.5" width="479" height="479" fill="none" stroke="#4DE8FF" stroke-opacity="0.2"/>
+<path d="M90 300 C170 160 300 340 390 150" fill="none" stroke="#4DE8FF" stroke-opacity="0.28" stroke-width="1.5" stroke-dasharray="5 9"/><circle cx="90" cy="300" r="9" fill="#4DE8FF"/><circle cx="390" cy="150" r="9" fill="none" stroke="#4DE8FF" stroke-width="2"/>
+<text x="28" y="48" font-family="monospace" font-size="15" letter-spacing="3" fill="#4DE8FF">KAVYA / TRIPS</text>
+<rect x="24" y="428" width="104" height="28" fill="#050505" stroke="#F4F1EA" stroke-opacity="0.5"/>
+<text x="76" y="447" text-anchor="middle" font-family="monospace" font-size="13" letter-spacing="3" fill="#F4F1EA">CONCEPT</text></svg>

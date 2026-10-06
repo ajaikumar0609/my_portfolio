@@ -1,53 +1,15 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { experience } from '@/data/content'
 
-const experiences = [
-  {
-    year: '2023',
-    company: 'KARUNYA INSTITUTE',
-    role: 'B.Tech CSE (AI)',
-    type: 'EDUCATION',
-    bullets: [
-      'Computer Science & Engineering with specialization in Artificial Intelligence',
-      'Core focus: ML, Data Structures, Backend Systems, Mobile Dev',
-      'Tirunelveli, Tamil Nadu',
-    ],
-  },
-  {
-    year: '2024',
-    company: 'LIFECHANGERS IND',
-    role: 'Web Development Intern',
-    type: 'INTERNSHIP',
-    bullets: [
-      'Built and deployed web interfaces for client projects',
-      'Frontend development with modern JavaScript frameworks',
-      'Collaborated with cross-functional team on product delivery',
-    ],
-  },
-  {
-    year: '2024',
-    company: 'LIFECHANGERS IND',
-    role: 'Full Stack Development Intern',
-    type: 'INTERNSHIP',
-    bullets: [
-      'Full-stack development: frontend, backend, database integration',
-      'Built REST APIs and integrated third-party services',
-      'Deployed production applications to cloud infrastructure',
-    ],
-  },
-  {
-    year: '2025',
-    company: 'ICANIO TECH SCHOOL',
-    role: 'AI Development Intern',
-    type: 'INTERNSHIP',
-    bullets: [
-      'Worked on AI/ML model development and deployment pipelines',
-      'Built intelligent applications integrating LLM capabilities',
-      'Contributed to production AI infrastructure',
-    ],
-  },
-]
+const experiences = experience.map(e => ({
+  year: e.year,
+  company: e.org,
+  role: e.role,
+  type: e.kind,
+  bullets: e.bullets,
+}))
 
 export default function ExperienceTimeline() {
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -66,16 +28,16 @@ export default function ExperienceTimeline() {
   }, [])
 
   return (
-    <section className="py-32" style={{ overflow: 'hidden' }}>
+    <section data-nav="about" className="py-32" style={{ overflow: 'hidden' }}>
       {/* Section header */}
       <div className="px-[8vw] md:px-[12vw] mb-16">
-        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D' }} className="mb-3">
+        <div style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '10px', letterSpacing: '0.2em', color: '#B8FF3D' }} className="mb-3">
           05 / EXPERIENCE
         </div>
-        <div style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, letterSpacing: '-0.03em', color: '#F4F1EA', lineHeight: 1 }}>
+        <div style={{ fontFamily: 'var(--font-space-grotesk), sans-serif', fontSize: 'clamp(36px, 5vw, 64px)', fontWeight: 700, letterSpacing: '-0.03em', color: '#F4F1EA', lineHeight: 1 }}>
           TIMELINE
         </div>
-        <div style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.25)', marginTop: '8px' }}>
+        <div style={{ fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: '10px', letterSpacing: '0.15em', color: 'rgba(244,241,234,0.25)', marginTop: '8px' }}>
           ← SCROLL / SWIPE →
         </div>
       </div>
@@ -118,7 +80,7 @@ export default function ExperienceTimeline() {
                 position: 'absolute',
                 top: '20px',
                 right: '20px',
-                fontFamily: 'IBM Plex Mono, monospace',
+                fontFamily: 'var(--font-ibm-plex-mono), monospace',
                 fontSize: '10px',
                 letterSpacing: '0.15em',
                 color: 'rgba(244,241,234,0.2)',
@@ -130,7 +92,7 @@ export default function ExperienceTimeline() {
             {/* Year */}
             <div
               style={{
-                fontFamily: 'IBM Plex Mono, monospace',
+                fontFamily: 'var(--font-ibm-plex-mono), monospace',
                 fontSize: 'clamp(48px, 8vw, 72px)',
                 fontWeight: 600,
                 color: 'rgba(244,241,234,0.08)',
@@ -144,7 +106,7 @@ export default function ExperienceTimeline() {
             {/* Type badge */}
             <div
               style={{
-                fontFamily: 'IBM Plex Mono, monospace',
+                fontFamily: 'var(--font-ibm-plex-mono), monospace',
                 fontSize: '9px',
                 letterSpacing: '0.2em',
                 color: exp.type === 'EDUCATION' ? '#4DE8FF' : '#B8FF3D',
@@ -157,7 +119,7 @@ export default function ExperienceTimeline() {
             {/* Company */}
             <div
               style={{
-                fontFamily: 'Space Grotesk, sans-serif',
+                fontFamily: 'var(--font-space-grotesk), sans-serif',
                 fontSize: 'clamp(18px, 2.5vw, 24px)',
                 fontWeight: 600,
                 color: '#F4F1EA',
@@ -171,7 +133,7 @@ export default function ExperienceTimeline() {
             {/* Role */}
             <div
               style={{
-                fontFamily: 'IBM Plex Mono, monospace',
+                fontFamily: 'var(--font-ibm-plex-mono), monospace',
                 fontSize: '11px',
                 color: 'rgba(244,241,234,0.4)',
                 letterSpacing: '0.08em',
@@ -187,7 +149,7 @@ export default function ExperienceTimeline() {
                 <div
                   key={bi}
                   style={{
-                    fontFamily: 'Space Grotesk, sans-serif',
+                    fontFamily: 'var(--font-space-grotesk), sans-serif',
                     fontSize: '13px',
                     color: 'rgba(244,241,234,0.45)',
                     lineHeight: 1.6,

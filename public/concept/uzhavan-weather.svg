@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="480" height="480"><rect width="480" height="480" fill="#0a0803"/>
+<rect x="0.5" y="0.5" width="479" height="479" fill="none" stroke="#D8B35A" stroke-opacity="0.2"/>
+<path d="M150 230 a45 45 0 0 1 85 -20 a38 38 0 0 1 80 22 a30 30 0 0 1 -5 58 h-150 a30 30 0 0 1 -10 -60z" fill="none" stroke="#D8B35A" stroke-width="2"/><line x1="170" y1="310" x2="158" y2="345" fill="none" stroke="#D8B35A" stroke-opacity="0.28" stroke-width="1.5"/><line x1="220" y1="310" x2="208" y2="345" fill="none" stroke="#D8B35A" stroke-opacity="0.28" stroke-width="1.5"/><line x1="270" y1="310" x2="258" y2="345" fill="none" stroke="#D8B35A" stroke-opacity="0.28" stroke-width="1.5"/><line x1="320" y1="310" x2="308" y2="345" fill="none" stroke="#D8B35A" stroke-opacity="0.28" stroke-width="1.5"/>
+<text x="28" y="48" font-family="monospace" font-size="15" letter-spacing="3" fill="#D8B35A">UZHAVAN / WEATHER</text>
+<rect x="24" y="428" width="104" height="28" fill="#050505" stroke="#F4F1EA" stroke-opacity="0.5"/>
+<text x="76" y="447" text-anchor="middle" font-family="monospace" font-size="13" letter-spacing="3" fill="#F4F1EA">CONCEPT</text></svg>

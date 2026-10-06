@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="480" height="480"><rect width="480" height="480" fill="#0a0803"/>
+<rect x="0.5" y="0.5" width="479" height="479" fill="none" stroke="#D8B35A" stroke-opacity="0.2"/>
+<path d="M130 170 L130 130 L170 130" fill="none" stroke="#D8B35A" stroke-width="2"/><path d="M350 170 L350 130 L310 130" fill="none" stroke="#D8B35A" stroke-width="2"/><path d="M130 270 L130 310 L170 310" fill="none" stroke="#D8B35A" stroke-width="2"/><path d="M350 270 L350 310 L310 310" fill="none" stroke="#D8B35A" stroke-width="2"/><ellipse cx="240" cy="220" rx="70" ry="42" fill="none" stroke="#D8B35A" stroke-opacity="0.28" stroke-width="1.5"/><circle cx="240" cy="220" r="16" fill="#D8B35A"/>
+<text x="28" y="48" font-family="monospace" font-size="15" letter-spacing="3" fill="#D8B35A">UZHAVAN / VISION</text>
+<rect x="24" y="428" width="104" height="28" fill="#050505" stroke="#F4F1EA" stroke-opacity="0.5"/>
+<text x="76" y="447" text-anchor="middle" font-family="monospace" font-size="13" letter-spacing="3" fill="#F4F1EA">CONCEPT</text></svg>

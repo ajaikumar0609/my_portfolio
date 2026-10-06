@@ -1,179 +1,230 @@
 'use client'
 
-import { useEffect, useState, useRef, useCallback } from 'react'
-import { useRouter } from 'next/navigation'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
+import { person, projects, stack } from '@/data/content'
 
-interface Item {
+const mono = { fontFamily: 'var(--font-ibm-plex-mono), monospace' } as const
+
+export interface Command {
+  id: string
   label: string
-  sub: string
-  href: string
-  external?: boolean
-  group: string
+  hint: string
+  group: 'NAVIGATE' | 'PROJECTS' | 'LINKS'
+  keywords: string[]
+  run: () => void
 }
 
-const items: Item[] = [
-  { label: 'Yamini Infotech ERP', sub: '/work/yamini', href: '/work/yamini', group: 'PROJECTS' },
-  { label: 'Kavya Transports', sub: '/work/kavya', href: '/work/kavya', group: 'PROJECTS' },
-  { label: 'UZHAVAN AI', sub: '/work/uzhavan', href: '/work/uzhavan', group: 'PROJECTS' },
-  { label: 'About', sub: '/about', href: '/about', group: 'NAVIGATE' },
-  { label: 'Contact', sub: '/contact', href: '/contact', group: 'NAVIGATE' },
-  { label: 'GitHub', sub: '↗ github.com/ajaikumarN', href: 'https://github.com/ajaikumarN', external: true, group: 'EXTERNAL' },
-  { label: 'Download Resume', sub: '↓ resume.pdf', href: '/resume.pdf', external: true, group: 'EXTERNAL' },
-]
+// Keywords come from the verified content plus the requested semantic aliases.
+const ALIASES: Record<string, string[]> = {
+  yamini: ['gps', 'erp', 'attendance', 'geofence', 'workforce', 'enterprise', 'tracking'],
+  kavya: ['fleet', 'transport', 'transports', 'logistics', 'vehicle', 'trips', 'routes'],
+  uzhavan: ['agriculture', 'agricultural', 'tamil', 'vision', 'farm', 'crop', 'weather', 'ai'],
+}
 
-export default function CommandPalette() {
-  const [open, setOpen] = useState(false)
+export function projectKeywords(id: 'yamini' | 'kavya' | 'uzhavan'): string[] {
+  const p = projects.find(x => x.id === id)!
+  return [
+    ...ALIASES[id],
+    ...p.tiles.map(t => t.toLowerCase()),
+    ...p.stack.map(t => t.toLowerCase()),
+    p.category.toLowerCase(),
+  ]
+}
+
+export function stackKeywords(): string[] {
+  return stack.map(t => t.name.toLowerCase())
+}
+
+export function search(commands: Command[], query: string): { cmd: Command; match?: string }[] {
+  const q = query.trim().toLowerCase()
+  if (!q) return commands.map(cmd => ({ cmd }))
+  const tokens = q.split(/\s+/)
+  const out: { cmd: Command; match?: string; score: number; i: number }[] = []
+  commands.forEach((cmd, i) => {
+    const label = cmd.label.toLowerCase()
+    let score = 0
+    let match: string | undefined
+    if (label === q) score = 100
+    else if (label.startsWith(q)) score = 80
+    else if (label.includes(q)) score = 60
+    const kwExact = cmd.keywords.find(k => k === q)
+    const kwStart = cmd.keywords.find(k => k.startsWith(q))
+    const kwIn = cmd.keywords.find(k => k.includes(q))
+    if (kwExact && score < 70) (score = 70), (match = kwExact)
+    else if (kwStart && score < 50) (score = 50), (match = kwStart)
+    else if (kwIn && score < 30) (score = 30), (match = kwIn)
+    if (!score && tokens.length > 1) {
+      const hay = `${label} ${cmd.keywords.join(' ')}`
+      if (tokens.every(t => hay.includes(t))) score = 20
+    }
+    if (score) out.push({ cmd, match, score, i })
+  })
+  return out.sort((a, b) => b.score - a.score || a.i - b.i)
+}
+
+export default function CommandPalette({
+  open,
+  onClose,
+  commands,
+}: {
+  open: boolean
+  onClose: () => void
+  commands: Command[]
+}) {
   const [query, setQuery] = useState('')
-  const [activeIndex, setActiveIndex] = useState(0)
+  const [active, setActive] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
-  const router = useRouter()
+  const listRef = useRef<HTMLUListElement>(null)
+  const returnFocus = useRef<HTMLElement | null>(null)
+  const uid = useId()
+  const listId = `${uid}-list`
 
-  const filtered = items.filter(item =>
-    item.label.toLowerCase().includes(query.toLowerCase()) ||
-    item.group.toLowerCase().includes(query.toLowerCase())
-  )
-
-  const execute = useCallback((item: Item) => {
-    if (item.external) {
-      window.open(item.href, '_blank', 'noopener noreferrer')
-    } else {
-      router.push(item.href)
-    }
-    setOpen(false)
-    setQuery('')
-  }, [router])
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        setOpen(v => !v)
-        setQuery('')
-        setActiveIndex(0)
-      }
-      if (e.key === 'Escape') setOpen(false)
-    }
-    const openHandler = () => {
-      setOpen(true)
-      setQuery('')
-      setActiveIndex(0)
-    }
-    document.addEventListener('keydown', handler)
-    document.addEventListener('open-palette', openHandler)
-    return () => {
-      document.removeEventListener('keydown', handler)
-      document.removeEventListener('open-palette', openHandler)
-    }
-  }, [])
+  const results = useMemo(() => search(commands, query), [commands, query])
 
   useEffect(() => {
     if (open) {
-      setTimeout(() => inputRef.current?.focus(), 50)
+      returnFocus.current = document.activeElement as HTMLElement | null
+      setQuery('')
+      setActive(0)
+      requestAnimationFrame(() => inputRef.current?.focus())
+    } else {
+      returnFocus.current?.focus?.()
+      returnFocus.current = null
     }
   }, [open])
 
-  const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault()
-      setActiveIndex(i => Math.min(i + 1, filtered.length - 1))
-    }
-    if (e.key === 'ArrowUp') {
-      e.preventDefault()
-      setActiveIndex(i => Math.max(i - 1, 0))
-    }
-    if (e.key === 'Enter' && filtered[activeIndex]) {
-      execute(filtered[activeIndex])
-    }
-  }
+  useEffect(() => setActive(0), [query])
+
+  useEffect(() => {
+    listRef.current?.querySelector('[aria-selected="true"]')?.scrollIntoView({ block: 'nearest' })
+  }, [active])
 
   if (!open) return null
 
-  const groups = [...new Set(filtered.map(i => i.group))]
+  const run = (i: number) => {
+    const r = results[i]
+    if (!r) return
+    onClose()
+    requestAnimationFrame(() => r.cmd.run())
+  }
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      e.preventDefault()
+      onClose()
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setActive(a => (results.length ? (a + 1) % results.length : 0))
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      setActive(a => (results.length ? (a - 1 + results.length) % results.length : 0))
+    } else if (e.key === 'Enter') {
+      e.preventDefault()
+      run(active)
+    } else if (e.key === 'Tab') {
+      e.preventDefault()
+    }
+  }
+
+  let lastGroup = ''
 
   return (
     <div
-      className="fixed inset-0 z-[9000] flex items-start justify-center pt-[15vh]"
-      style={{ background: 'rgba(5,5,5,0.85)', backdropFilter: 'blur(8px)' }}
-      onClick={() => setOpen(false)}
+      className="fixed inset-0 z-[10010] flex items-start justify-center px-4 pt-[14vh]"
+      style={{ background: 'rgba(5,5,5,0.72)', backdropFilter: 'blur(6px)' }}
+      onMouseDown={e => e.target === e.currentTarget && onClose()}
     >
       <div
-        className="w-full max-w-[560px] mx-4 overflow-hidden"
-        style={{
-          background: 'rgba(5,5,5,0.98)',
-          border: '1px solid rgba(184,255,61,0.2)',
-          boxShadow: '0 0 80px rgba(184,255,61,0.06)',
-        }}
-        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Command palette"
+        onKeyDown={onKeyDown}
+        className="w-full max-w-[640px] overflow-hidden rounded-xl"
+        style={{ background: '#0a0a0a', border: '1px solid rgba(184,255,61,0.22)' }}
       >
-        {/* Input */}
-        <div
-          className="flex items-center gap-3 px-5 py-4"
-          style={{ borderBottom: '1px solid rgba(244,241,234,0.07)' }}
-        >
-          <span style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '13px', color: '#B8FF3D' }}>⌘</span>
+        <div className="flex items-center gap-3 px-5 py-4" style={{ borderBottom: '1px solid var(--border)' }}>
+          <span aria-hidden="true" style={{ ...mono, fontSize: 12, color: '#B8FF3D' }}>⌘</span>
           <input
             ref={inputRef}
             value={query}
-            onChange={e => { setQuery(e.target.value); setActiveIndex(0) }}
-            onKeyDown={onKeyDown}
-            placeholder="Search AJAI.SYSTEM..."
-            className="flex-1 bg-transparent outline-none text-[#F4F1EA] placeholder-[rgba(244,241,234,0.25)]"
-            style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '13px', letterSpacing: '0.05em' }}
+            onChange={e => setQuery(e.target.value)}
+            role="combobox"
+            aria-expanded="true"
+            aria-controls={listId}
+            aria-autocomplete="list"
+            aria-activedescendant={results.length ? `${uid}-opt-${active}` : undefined}
+            aria-label="Search AJAI.SYSTEM"
+            placeholder="Search AJAI.SYSTEM  ·  try gps, fleet, tamil"
+            autoComplete="off"
+            spellCheck={false}
+            className="w-full bg-transparent"
+            style={{ ...mono, fontSize: 14, color: '#F4F1EA', outline: 'none' }}
           />
-          <span
-            onClick={() => setOpen(false)}
-            className="cursor-none text-[rgba(244,241,234,0.3)] hover:text-[#F4F1EA] transition-colors"
-            style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', letterSpacing: '0.1em' }}
-          >
+          <span aria-hidden="true" style={{ ...mono, fontSize: 10, letterSpacing: '0.16em', color: 'rgba(244,241,234,0.5)' }}>
             ESC
           </span>
         </div>
 
-        {/* Results */}
-        <div className="pb-3">
-          {groups.map(group => {
-            const groupItems = filtered.filter(i => i.group === group)
+        <ul
+          id={listId}
+          ref={listRef}
+          role="listbox"
+          aria-label="Results"
+          className="m-0 max-h-[52vh] list-none overflow-y-auto p-2"
+        >
+          {results.map(({ cmd, match }, i) => {
+            const header = cmd.group !== lastGroup ? cmd.group : null
+            lastGroup = cmd.group
             return (
-              <div key={group}>
+              <li key={cmd.id} role="presentation">
+                {header && !query && (
+                  <div
+                    aria-hidden="true"
+                    className="px-3 pb-1 pt-3"
+                    style={{ ...mono, fontSize: 10, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.5)' }}
+                  >
+                    {header}
+                  </div>
+                )}
                 <div
-                  className="px-5 pt-4 pb-2"
-                  style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '9px', letterSpacing: '0.2em', color: 'rgba(244,241,234,0.25)' }}
+                  id={`${uid}-opt-${i}`}
+                  role="option"
+                  aria-selected={i === active}
+                  onMouseMove={() => i !== active && setActive(i)}
+                  onClick={() => run(i)}
+                  className="flex cursor-pointer items-center justify-between gap-4 rounded-md px-3 py-2.5"
+                  style={{
+                    background: i === active ? 'rgba(184,255,61,0.08)' : 'transparent',
+                    outline: i === active ? '1px solid rgba(184,255,61,0.3)' : 'none',
+                  }}
                 >
-                  {group}
+                  <span style={{ fontSize: 15, color: '#F4F1EA' }}>
+                    <span aria-hidden="true" style={{ color: i === active ? '#B8FF3D' : 'rgba(244,241,234,0.4)' }}>→ </span>
+                    {cmd.label}
+                  </span>
+                  <span style={{ ...mono, fontSize: 10, letterSpacing: '0.14em', color: 'rgba(244,241,234,0.55)' }}>
+                    {match ? `↳ ${match.toUpperCase()}  ` : ''}
+                    {cmd.hint}
+                  </span>
                 </div>
-                {groupItems.map(item => {
-                  const globalIndex = filtered.indexOf(item)
-                  return (
-                    <button
-                      key={item.label}
-                      onClick={() => execute(item)}
-                      className="w-full text-left px-5 py-3 flex items-center justify-between group transition-colors"
-                      style={{
-                        background: globalIndex === activeIndex ? 'rgba(184,255,61,0.06)' : 'transparent',
-                        borderLeft: globalIndex === activeIndex ? '2px solid #B8FF3D' : '2px solid transparent',
-                      }}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', color: 'rgba(244,241,234,0.3)' }}>→</span>
-                        <span style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '14px', color: globalIndex === activeIndex ? '#F4F1EA' : 'rgba(244,241,234,0.65)' }}>
-                          {item.label}
-                        </span>
-                      </div>
-                      <span style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '10px', color: 'rgba(244,241,234,0.25)' }}>
-                        {item.sub}
-                      </span>
-                    </button>
-                  )
-                })}
-              </div>
+              </li>
             )
           })}
-
-          {filtered.length === 0 && (
-            <div className="px-5 py-6 text-center" style={{ fontFamily: 'IBM Plex Mono, monospace', fontSize: '11px', color: 'rgba(244,241,234,0.25)' }}>
-              NO RESULTS
-            </div>
+          {results.length === 0 && (
+            <li role="presentation" className="px-3 py-6 text-center" style={{ ...mono, fontSize: 11, letterSpacing: '0.16em', color: 'rgba(244,241,234,0.55)' }}>
+              NO MATCH FOR “{query.toUpperCase()}”
+            </li>
           )}
+        </ul>
+        <div className="sr-only" role="status" aria-live="polite">
+          {results.length} {results.length === 1 ? 'result' : 'results'}
+        </div>
+        <div
+          className="flex justify-between px-5 py-3"
+          style={{ ...mono, fontSize: 10, letterSpacing: '0.16em', color: 'rgba(244,241,234,0.5)', borderTop: '1px solid var(--border)' }}
+        >
+          <span>↑↓ NAVIGATE · ↵ OPEN</span>
+          <span>{person.short}</span>
         </div>
       </div>
     </div>
