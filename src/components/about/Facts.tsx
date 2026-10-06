@@ -28,7 +28,7 @@ export default function Facts() {
         Computer Science and Engineering student with hands-on experience building backend systems and REST APIs for
         business clients. Built ERP and fleet management platforms using Java, Spring Boot, Python, FastAPI and PostgreSQL.
       </p>
-      <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.45)' }}>
+      <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.55)' }}>
         SOURCE · RESUME
       </p>
 

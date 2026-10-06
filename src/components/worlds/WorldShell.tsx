@@ -5,6 +5,8 @@ import type { CSSProperties, ReactNode } from 'react'
 import { projects, type ProjectId } from '@/data/content'
 import { worldTheme } from '@/data/worlds'
 import { openProject } from '@/lib/system'
+import { logos } from '@/data/screenshots'
+import { LogoPlate } from '@/components/worlds/Evidence'
 
 const mono = { fontFamily: 'var(--font-ibm-plex-mono), monospace' } as const
 const sans = { fontFamily: 'var(--font-space-grotesk), sans-serif' } as const
@@ -15,11 +17,14 @@ export default function WorldShell({
   id,
   backdrop,
   heroExtra,
+  anchor,
   children,
 }: {
   id: ProjectId
   backdrop?: ReactNode
   heroExtra?: ReactNode
+  /** The strongest real screenshot: the opening visual evidence for the project. */
+  anchor?: ReactNode
   children: ReactNode
 }) {
   const p = projects.find(x => x.id === id)!
@@ -29,6 +34,7 @@ export default function WorldShell({
 
   return (
     <main
+      id="main"
       data-world={id}
       className="relative min-h-screen w-full overflow-x-clip"
       style={{ background: theme.bg, ['--w-accent' as string]: theme.accent, ['--w-line' as string]: theme.line } as CSSProperties}
@@ -37,7 +43,7 @@ export default function WorldShell({
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">{backdrop}</div>
 
         <nav aria-label="Projects" className="relative z-10 flex flex-wrap items-center gap-x-5 gap-y-2" style={{ ...mono, fontSize: 10, letterSpacing: '0.2em' }}>
-          <Link href="/#work" data-cursor="project" style={{ color: 'rgba(244,241,234,0.75)' }}>
+          <Link href="/#work" data-cursor="project" className="inline-block py-2" style={{ color: 'rgba(244,241,234,0.75)' }}>
             ← ALL WORK
           </Link>
           {projects.map(q => (
@@ -47,7 +53,7 @@ export default function WorldShell({
               onClick={() => (q.id === id ? undefined : openProject(q.id))}
               aria-current={q.id === id ? 'page' : undefined}
               data-cursor={q.id === id ? undefined : 'project'}
-              className="bg-transparent p-0"
+              className="bg-transparent px-0 py-2"
               style={{ color: q.id === id ? theme.accent : 'rgba(244,241,234,0.6)', letterSpacing: '0.2em', ...mono, fontSize: 10 }}
             >
               {q.index} {q.id.toUpperCase()}
@@ -55,14 +61,18 @@ export default function WorldShell({
           ))}
         </nav>
 
-        <div className="relative z-10 mt-[12svh]">
-          <p className="m-0" style={{ ...mono, fontSize: 11, letterSpacing: '0.22em', color: theme.accent }}>
-            {p.index} / 03 · {p.category}
-          </p>
+        <div className={`relative z-10 mt-[12svh] ${anchor ? 'lg:grid lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start lg:gap-12' : ''}`}>
+          <div className="min-w-0">
+          <div className="flex items-center gap-3">
+            <LogoPlate src={logos[id].src} alt={logos[id].alt} size={52} />
+            <p className="m-0" style={{ ...mono, fontSize: 11, letterSpacing: '0.22em', color: theme.accent }}>
+              {p.index} / 03 · {p.category}
+            </p>
+          </div>
           {heroExtra}
           <h1
             className="m-0 mt-4"
-            style={{ ...sans, fontSize: 'clamp(3.2rem, 11vw, 10rem)', fontWeight: 700, lineHeight: 0.88, letterSpacing: '-0.05em', color: '#F4F1EA' }}
+            style={{ ...sans, fontSize: anchor ? 'clamp(2.9rem, 6.4vw, 6.2rem)' : 'clamp(3.2rem, 11vw, 10rem)', fontWeight: 700, lineHeight: 0.88, letterSpacing: '-0.05em', color: '#F4F1EA' }}
           >
             {p.title[0]}
             <br />
@@ -82,6 +92,8 @@ export default function WorldShell({
               </li>
             ))}
           </ul>
+          </div>
+          {anchor && <div className="relative mt-10 min-w-0 lg:mt-2">{anchor}</div>}
         </div>
       </header>
 

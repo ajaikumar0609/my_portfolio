@@ -3,10 +3,15 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { experience } from '@/data/content'
 import { useReduced } from '@/lib/useReduced'
+import { logos } from '@/data/screenshots'
+import { LogoPlate } from '@/components/worlds/Evidence'
 
 const mono = { fontFamily: 'var(--font-ibm-plex-mono), monospace' } as const
 const sans = { fontFamily: 'var(--font-space-grotesk), sans-serif' } as const
 const N = experience.length
+
+// Only verified logos. Icanio is intentionally absent: the supplied mark reads "ICANIO TECHNOLOGIES", the resume says "Icanio Tech School".
+const LOGO_FOR: Record<string, keyof typeof logos> = { karunya: 'karunya', lifechangers: 'lifechangersind' }
 
 // Horizontal snap timeline. The <ol> is the semantic content; the rail and buttons are controls.
 export default function Timeline() {
@@ -42,7 +47,7 @@ export default function Timeline() {
         li.style.transform = ''
       } else {
         const k = Math.min(d, 1)
-        li.style.opacity = String(1 - 0.62 * k)
+        li.style.opacity = String(1 - 0.34 * k)
         li.style.transform = `scale(${1 - 0.07 * k})`
       }
     })
@@ -185,8 +190,8 @@ export default function Timeline() {
               >
                 <div className="pl-5 md:pl-8" style={{ borderLeft: `1px solid ${on ? 'rgba(184,255,61,0.5)' : 'var(--border)'}` }}>
                   <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1" style={{ ...mono, fontSize: 10, letterSpacing: '0.2em' }}>
-                    <span style={{ color: on ? '#B8FF3D' : 'rgba(244,241,234,0.6)' }}>{e.kind}</span>
-                    <span style={{ color: 'rgba(244,241,234,0.75)' }}>{e.period}</span>
+                    <span style={{ color: on ? '#B8FF3D' : 'rgba(244,241,234,0.85)' }}>{e.kind}</span>
+                    <span style={{ color: 'rgba(244,241,234,0.9)' }}>{e.period}</span>
                   </div>
 
                   <div
@@ -205,10 +210,13 @@ export default function Timeline() {
                     {e.year}
                   </div>
 
-                  <h3 className="m-0 mt-5" style={{ ...mono, fontSize: 12, letterSpacing: '0.22em', fontWeight: 500, color: '#F4F1EA' }}>
+                  <div className="mt-5 flex items-center gap-3">
+                    {LOGO_FOR[e.id] && <LogoPlate src={logos[LOGO_FOR[e.id]].src} alt={logos[LOGO_FOR[e.id]].alt} size={36} />}
+                  <h3 className="m-0" style={{ ...mono, fontSize: 12, letterSpacing: '0.22em', fontWeight: 500, color: '#F4F1EA' }}>
                     <span className="sr-only">{e.year}. </span>
                     {e.org}
                   </h3>
+                  </div>
                   <p className="m-0 mt-2" style={{ ...sans, fontSize: 'clamp(1.25rem, 2.6vw, 2rem)', fontWeight: 600, letterSpacing: '-0.02em', lineHeight: 1.15, color: '#F4F1EA' }}>
                     {e.role}
                   </p>

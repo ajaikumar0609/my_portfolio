@@ -255,7 +255,7 @@ export default function FleetSim() {
           <div className="mt-4" style={{ borderTop: '1px solid var(--w-line)', paddingTop: 14 }}>
             <p className="m-0" style={{ ...mono, fontSize: 10, letterSpacing: '0.18em', color: 'var(--w-accent)' }}>{claim.label}</p>
             <p className="m-0 mt-2" style={{ ...sans, fontSize: 14, lineHeight: 1.5, color: 'rgba(244,241,234,0.88)' }}>{claim.text}</p>
-            <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.45)' }}>
+            <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.55)' }}>
               {claim.source === 'resume' ? 'SOURCE · RESUME' : claim.source === 'owner' ? 'SOURCE · OWNER' : 'EXPLANATORY'}
             </p>
           </div>
@@ -410,7 +410,7 @@ export default function FleetSim() {
                 key={v.id}
                 type="button"
                 aria-pressed={sel === v.id}
-                aria-label={`Select vehicle ${v.id} (simulated data)`}
+                aria-label={`V${v.id}, select vehicle (simulated data)`}
                 onClick={() => select(v)}
                 className="bg-transparent px-3 py-2"
                 style={{

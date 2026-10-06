@@ -2,12 +2,13 @@
 
 import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { FileText, Globe, Layers, Mail, Cpu, User } from 'lucide-react'
+import { FileText, Github, Globe, Layers, Mail, Cpu, User } from 'lucide-react'
 import Dock, { type DockItemData } from '@/components/ui/Dock'
 import Cursor from '@/components/Cursor'
-import CommandPalette, { projectKeywords, stackKeywords, type Command } from '@/components/CommandPalette'
+import dynamic from 'next/dynamic'
+import { projectKeywords, stackKeywords, type Command } from '@/lib/palette'
 import ShortcutsDialog from '@/components/ShortcutsDialog'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'motion/react'
 import { projects, type ProjectId } from '@/data/content'
 import { worldTheme } from '@/data/worlds'
 import {
@@ -23,6 +24,8 @@ import {
   subscribeReady,
   type SectionKey,
 } from '@/lib/system'
+
+const CommandPalette = dynamic(() => import('@/components/CommandPalette'), { ssr: false })
 
 const mono = { fontFamily: 'var(--font-ibm-plex-mono), monospace' } as const
 const ICONS: Record<SectionKey, React.ReactNode> = {
@@ -41,10 +44,26 @@ export default function Chrome() {
   const pathname = usePathname()
   const ready = useSyncExternalStore(subscribeReady, getReady, () => false)
   const [palette, setPalette] = useState(false)
+  const [paletteLoaded, setPaletteLoaded] = useState(false)
   const [help, setHelp] = useState(false)
   const [spot, setSpot] = useState<SectionKey | null>(null)
   const [mac, setMac] = useState(true)
   const [curtain, setCurtain] = useState<{ id: ProjectId; phase: 'in' | 'out' } | null>(null)
+
+  useEffect(() => {
+    if (palette) setPaletteLoaded(true)
+  }, [palette])
+
+  // Preload the palette chunk once the page is idle so the first ⌘K is instant and no keystrokes are lost.
+  useEffect(() => {
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void }
+    if (w.requestIdleCallback) {
+      const id = w.requestIdleCallback(() => setPaletteLoaded(true), { timeout: 2500 })
+      return () => w.cancelIdleCallback?.(id)
+    }
+    const t = setTimeout(() => setPaletteLoaded(true), 1500)
+    return () => clearTimeout(t)
+  }, [])
 
   const home = pathname === '/'
   const visible = ready || !home
@@ -243,6 +262,13 @@ export default function Chrome() {
 
   return (
     <>
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[11000] focus:px-4 focus:py-3"
+        style={{ ...mono, fontSize: 11, letterSpacing: '0.18em', background: '#050505', color: '#F4F1EA', border: '1px solid #B8FF3D' }}
+      >
+        SKIP TO CONTENT
+      </a>
       <Cursor />
       <div
         style={{
@@ -254,7 +280,6 @@ export default function Chrome() {
         <button
           type="button"
           onClick={() => setPalette(true)}
-          aria-label="Open command palette"
           aria-keyshortcuts="Control+K Meta+K"
           className="fixed right-[6vw] top-[3.5svh] z-[900] rounded px-3 py-2 backdrop-blur-sm md:right-[7vw]"
           style={{
@@ -268,7 +293,10 @@ export default function Chrome() {
         >
           SEARCH <span style={{ color: '#B8FF3D' }}>{mac ? '⌘K' : 'CTRL K'}</span>
         </button>
-        <Dock items={items} />
+        <Dock
+          items={items}
+          secondary={{ href: external.github, label: 'GITHUB', icon: <Github size={18} strokeWidth={1.8} />, cursor: 'github', shortcut: 'G' }}
+        />
       </div>
       <AnimatePresence>
         {curtain && (
@@ -307,7 +335,7 @@ export default function Chrome() {
           </motion.div>
         )}
       </AnimatePresence>
-      <CommandPalette open={palette} onClose={() => setPalette(false)} commands={commands} />
+      {paletteLoaded && <CommandPalette open={palette} onClose={() => setPalette(false)} commands={commands} />}
       <ShortcutsDialog open={help} onClose={() => setHelp(false)} />
     </>
   )

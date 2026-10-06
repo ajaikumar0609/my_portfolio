@@ -43,7 +43,7 @@ export function Beats({ beats }: { beats: Beat[] }) {
             <p className="m-0" style={{ ...sans, fontSize: 'clamp(1.05rem, 1.5vw, 1.35rem)', lineHeight: 1.5, color: 'rgba(244,241,234,0.9)', maxWidth: '60ch' }}>
               {b.text}
             </p>
-            <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.45)' }}>
+            <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.55)' }}>
               {SOURCE_TEXT[b.source]}
             </p>
           </div>

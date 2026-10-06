@@ -58,7 +58,7 @@ export default function ShortcutsDialog({ open, onClose }: { open: boolean; onCl
             ref={closeRef}
             type="button"
             onClick={onClose}
-            aria-label="Close shortcuts"
+            aria-label="ESC, close shortcuts"
             className="bg-transparent px-2 py-1"
             style={{ ...mono, fontSize: 10, letterSpacing: '0.16em', color: 'rgba(244,241,234,0.7)', border: '1px solid var(--border)' }}
           >

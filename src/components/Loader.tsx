@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-const BOOT_MS = 1000
-const READY_MS = 250
-const FADE_MS = 350
+const BOOT_MS = 700
+const READY_MS = 150
+const FADE_MS = 300
 
 // Under 1.5s end to end. Skipped on repeat visits and under reduced motion.
 export default function Loader({ onComplete }: { onComplete: () => void }) {

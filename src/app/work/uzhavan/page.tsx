@@ -12,7 +12,8 @@ import { uzhavan } from '@/data/worlds'
 const project = projects.find(p => p.id === 'uzhavan')!
 
 export const metadata: Metadata = {
-  title: 'UZHAVAN AI — Ajai Kumar',
+  title: 'UZHAVAN AI',
+  alternates: { canonical: '/work/uzhavan' },
   description: project.summary,
 }
 

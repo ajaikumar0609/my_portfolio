@@ -54,7 +54,7 @@ export default function Engineering() {
             </button>
             <div id={`yam-eng-${it.id}`} hidden={!isOpen} className="pb-6 pl-0 md:pl-10">
               <p className="m-0 max-w-[60ch]" style={{ ...sans, fontSize: 16, lineHeight: 1.55, color: 'rgba(244,241,234,0.85)' }}>{it.text}</p>
-              <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.45)' }}>SOURCE · OWNER</p>
+              <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.55)' }}>SOURCE · OWNER</p>
             </div>
           </li>
         )

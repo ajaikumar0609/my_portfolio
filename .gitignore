@@ -37,3 +37,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Project originals contain real client data (names, faces, plates). The repo is public: never commit them.
+/assets/originals/projects/
+/assets/originals/logos/
+/yamini_infotech_pics/
+/kavya_transports_pics/
+/logo/
+
+# Local-only: source originals and browser-test artifacts
+/assets/
+.playwright-mcp/

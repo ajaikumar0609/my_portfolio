@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import Image from 'next/image'
-import { person } from '@/data/content'
+import PortraitImage from '@/components/ui/PortraitImage'
 
 // Editorial portrait: no box. Mask fade at the waist, warm key light behind, thin rim light.
 // Pointer parallax is <= 6px, fine pointers only, off under reduced motion, paused offscreen.
@@ -64,20 +63,7 @@ export default function Portrait() {
           className="absolute inset-x-[-25%] top-[2%] bottom-0"
           style={{ background: 'radial-gradient(ellipse 52% 46% at 50% 28%, rgba(244,241,234,0.14), transparent 72%)' }}
         />
-        <Image
-          src={person.photo}
-          alt="Portrait of Ajai Kumar N"
-          width={943}
-          height={1668}
-          loading="lazy"
-          sizes="(max-width: 768px) 70vw, 40vw"
-          className="relative block h-full w-auto"
-          style={{
-            filter: 'brightness(1.12) contrast(1.05) drop-shadow(-1px 0 0 rgba(244,241,234,0.2)) drop-shadow(0 0 32px rgba(244,241,234,0.07))',
-            WebkitMaskImage: 'linear-gradient(to bottom, #000 70%, transparent 100%)',
-            maskImage: 'linear-gradient(to bottom, #000 70%, transparent 100%)',
-          }}
-        />
+        <PortraitImage sizes="(max-width: 768px) 110vw, 60vw" className="h-full" />
       </div>
     </div>
   )

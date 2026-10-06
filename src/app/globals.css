@@ -80,7 +80,7 @@ body::before {
 }
 
 .text-muted {
-  color: rgba(244,241,234,0.4);
+  color: rgba(244,241,234,0.55);
 }
 
 .border-system {

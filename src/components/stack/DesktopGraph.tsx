@@ -126,7 +126,7 @@ export default function DesktopGraph({
     }
   }
 
-  const dim = (on: boolean) => ({ opacity: on ? 1 : 0.28, transition: reduced ? 'none' : 'opacity 0.25s, border-color 0.25s, color 0.25s' })
+  const dim = (on: boolean) => ({ opacity: on ? 1 : 0.5, transition: reduced ? 'none' : 'opacity 0.25s, border-color 0.25s, color 0.25s' })
 
   const selectedTech = selection.kind === 'tech' ? selection.name : null
   const selectedLink = selection.kind === 'project' ? selection.id : null

@@ -1,0 +1,18 @@
+# Legacy v1 site and local-only files; the app is built from src/ and public/.
+/index.html
+/dragon-b64.js
+/icanio.jpeg
+/karunya.png
+/kavyalogo.png
+/life_changers_ind.jpeg
+/mypic.png
+/yamini-logo.png
+tsconfig.tsbuildinfo
+AGENTS.md
+CLAUDE.md
+.playwright-mcp
+/assets
+/scripts
+/yamini_infotech_pics
+/kavya_transports_pics
+/logo

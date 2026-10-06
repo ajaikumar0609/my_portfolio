@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { projects, type ProjectId } from '@/data/content'
 import { worldTheme } from '@/data/worlds'
 import { openProject } from '@/lib/system'
+import { screenshots } from '@/data/screenshots'
 
 const DomeGallery = dynamic(() => import('@/components/ui/DomeGallery'), {
   ssr: false,
@@ -32,13 +33,23 @@ export default function SelectedSystems({ standalone = false }: { standalone?: b
     return () => q.removeEventListener('change', update)
   }, [])
 
+  // REAL screenshot -> used directly. No real screenshot -> labelled CONCEPT tile. Never mixed up.
   const images = useMemo(
     () =>
       projects.flatMap(p =>
-        p.tiles.map(t => ({ src: tileSrc(p.id, t), alt: `${p.name}: ${t} (concept visual)`, project: p.id })),
+        screenshots[p.id].length
+          ? screenshots[p.id].map(shot => ({ src: shot.tile, alt: shot.alt, project: p.id }))
+          : p.tiles.map(t => ({ src: tileSrc(p.id, t), alt: `${p.name}: ${t} (concept visual)`, project: p.id })),
       ),
     [],
   )
+  const realCount = projects.filter(p => screenshots[p.id].length).length
+  const legend =
+    realCount === 0
+      ? 'TILES ARE CONCEPT VISUALS · NO REAL SCREENSHOTS'
+      : realCount === projects.length
+        ? 'REAL PROJECT SCREENSHOTS'
+        : 'REAL SCREENSHOTS (PERSONAL DATA PIXELATED) · UZHAVAN TILES ARE LABELLED CONCEPT'
 
   return (
     <section
@@ -79,7 +90,6 @@ export default function SelectedSystems({ standalone = false }: { standalone?: b
                     onMouseLeave={() => setHover(null)}
                     onFocus={() => setHover(p.id)}
                     onBlur={() => setHover(null)}
-                    aria-label={`Open ${p.name}. ${p.category}. ${p.status}.`}
                     className="block w-full bg-transparent py-6 text-left"
                     style={{ opacity: dim ? 0.35 : 1, transition: 'opacity 0.3s' }}
                   >
@@ -130,7 +140,7 @@ export default function SelectedSystems({ standalone = false }: { standalone?: b
                 images={images}
                 grayscale={false}
                 overlayBlurColor="#050505"
-                segments={24}
+                segments={14}
                 fit={1.15}
                 minRadius={900}
                 imageBorderRadius="6px"
@@ -142,7 +152,7 @@ export default function SelectedSystems({ standalone = false }: { standalone?: b
                 style={{ ...mono, fontSize: 10, letterSpacing: '0.18em', color: 'rgba(244,241,234,0.7)' }}
               >
                 <span>DRAG TO EXPLORE · CLICK A TILE TO ENTER</span>
-                <span>TILES ARE CONCEPT VISUALS · NO REAL SCREENSHOTS</span>
+                <span>{legend}</span>
               </div>
             </div>
           ) : (
@@ -158,14 +168,16 @@ export default function SelectedSystems({ standalone = false }: { standalone?: b
                     key={p.id}
                     type="button"
                     onClick={() => openProject(p.id)}
-                    aria-label={`Open ${p.name}. ${p.status}.`}
                     className="relative w-[78vw] shrink-0 snap-center bg-transparent p-0 text-left"
                     style={{ border: `1px solid ${theme.line}`, background: theme.bg }}
                   >
                     <span className="grid grid-cols-3 gap-px" aria-hidden="true">
-                      {p.tiles.slice(0, 6).map(t => (
+                      {(screenshots[p.id].length
+                        ? screenshots[p.id].slice(0, 6).map(shot => shot.tile)
+                        : p.tiles.slice(0, 6).map(t => tileSrc(p.id, t))
+                      ).map(src => (
                         // eslint-disable-next-line @next/next/no-img-element
-                        <img key={t} src={tileSrc(p.id, t)} alt="" loading="lazy" className="block aspect-square w-full object-cover" />
+                        <img key={src} src={src} alt="" loading="lazy" className="block aspect-square w-full object-cover" />
                       ))}
                     </span>
                     <span className="block p-4">
@@ -174,7 +186,7 @@ export default function SelectedSystems({ standalone = false }: { standalone?: b
                         {p.name}
                       </span>
                       <span className="mt-2 block" style={{ ...mono, fontSize: 10, letterSpacing: '0.14em', color: 'rgba(244,241,234,0.55)' }}>
-                        CONCEPT VISUALS · NO REAL SCREENSHOTS
+                        {screenshots[p.id].length ? 'REAL SCREENSHOTS' : 'CONCEPT VISUALS · NO REAL SCREENSHOTS'}
                       </span>
                     </span>
                   </button>

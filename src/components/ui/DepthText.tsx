@@ -108,6 +108,11 @@ const DepthText = ({
       return undefined;
     }
 
+    const settled = () => Math.abs(target.x - current.x) < 0.002 && Math.abs(target.y - current.y) < 0.002;
+    const wake = () => {
+      if (!frameId) frameId = requestAnimationFrame(tick);
+    };
+
     const handlePointerMove = (event: PointerEvent) => {
       const rect = root.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
@@ -118,12 +123,14 @@ const DepthText = ({
 
       target.x = baseRotation.x - y * safeTilt;
       target.y = baseRotation.y + x * safeTilt;
+      wake();
     };
 
     const handlePointerLeave = () => {
       activePointer = false;
       target.x = baseRotation.x;
       target.y = baseRotation.y;
+      wake();
     };
 
     if (canTrackPointer) {
@@ -144,6 +151,10 @@ const DepthText = ({
       current.x += (target.x - current.x) * safeSmoothing;
       current.y += (target.y - current.y) * safeSmoothing;
       applyTransform();
+      if (!autoOrbit && settled()) {
+        frameId = 0;
+        return;
+      }
       frameId = requestAnimationFrame(tick);
     };
 

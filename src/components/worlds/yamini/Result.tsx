@@ -56,8 +56,8 @@ export default function Result() {
             <dt style={{ ...mono, fontSize: 11, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.75)', order: 2 }}>{m.label}</dt>
             <dd className="m-0 mt-3" style={{ ...sans, fontSize: 'clamp(3.2rem, 9vw, 7rem)', fontWeight: 700, letterSpacing: '-0.05em', lineHeight: 1, color: '#F4F1EA' }}>
               <CountUp target={parseInt(m.value, 10)} suffix={m.value.replace(/[0-9]/g, '')} />
+              {m.note && <p className="m-0 mt-3" style={{ ...mono, fontSize: 10, letterSpacing: '0.14em', lineHeight: 1.6, color: 'rgba(244,241,234,0.65)' }}>{m.note.toUpperCase()}</p>}
             </dd>
-            {m.note && <p className="m-0 mt-3" style={{ ...mono, fontSize: 10, letterSpacing: '0.14em', lineHeight: 1.6, color: 'rgba(244,241,234,0.65)' }}>{m.note.toUpperCase()}</p>}
           </div>
         ))}
       </dl>

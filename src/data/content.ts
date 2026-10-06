@@ -14,10 +14,10 @@ export const person = {
   meta: 'INDIA · 2026 · SOFTWARE ENGINEERING',
   location: 'Tirunelveli, India',
   email: 'ajaikumar0609@gmail.com',
-  github: 'https://github.com/ajaikumarN',
+  github: 'https://github.com/ajaikumar0609',
   linkedin: 'https://linkedin.com/in/ajaikumarn',
   resume: '/Ajai-Kumar-N-Resume.pdf',
-  photo: '/mypic.png',
+  photo: '/portrait/ajai-kumar.png',
 } as const
 
 export const education = {
@@ -77,7 +77,7 @@ export const projects: Project[] = [
         source: 'owner',
       },
     ],
-    hasRealScreenshots: false,
+    hasRealScreenshots: true,
     source: ['resume', 'doc', 'owner'],
   },
   {
@@ -97,7 +97,7 @@ export const projects: Project[] = [
     summary:
       'Fleet management platform covering vehicle tracking, trip monitoring, billing and transport operations. PostgreSQL for fleet data, MongoDB for GPS and logs, WebSockets for real-time updates.',
     metrics: [],
-    hasRealScreenshots: false,
+    hasRealScreenshots: true,
     source: ['resume', 'doc'],
   },
   {

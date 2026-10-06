@@ -1,8 +1,8 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import createGlobe, { type Globe } from 'cobe'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { useReduced } from '@/lib/useReduced'
 import { openProject } from '@/lib/system'
 import { projects, type ProjectId } from '@/data/content'
@@ -13,35 +13,13 @@ const sans = { fontFamily: 'var(--font-space-grotesk), sans-serif' } as const
 // Tirunelveli (resume location). The marker is the base of operations, not a project site.
 const INDIA: [number, number] = [8.7139, 77.7567]
 
-// ABSTRACT system nodes. These sit in open ocean on purpose and mean nothing geographically:
-// they only give the AJAI -> project relationship lines something to connect to.
-const NODES: Record<ProjectId, [number, number]> = {
-  yamini: [-6, 64],
-  kavya: [-13, 80],
-  uzhavan: [-4, 94],
-}
-
 type RGB = [number, number, number]
 const ON: RGB = [0.72, 1, 0.24]
-const BASE: RGB = [0.3, 0.4, 0.16]
-const DIM: RGB = [0.14, 0.18, 0.09]
 
+// The globe carries exactly one geographic marker. Projects are never placed on the map:
+// they appear as an abstract screen-space ring of system links attached to India (see Halo).
 const scene = (active: ProjectId | null) => ({
-  markers: [
-    { location: INDIA, size: active ? 0.05 : 0.04, id: 'india' },
-    ...projects.map(p => ({
-      location: NODES[p.id],
-      size: active === p.id ? 0.045 : 0.02,
-      color: (active === p.id ? ON : active ? DIM : BASE) as RGB,
-      id: `node-${p.id}`,
-    })),
-  ],
-  arcs: projects.map(p => ({
-    from: INDIA,
-    to: NODES[p.id],
-    color: (active === p.id ? ON : active ? DIM : BASE) as RGB,
-    id: p.id,
-  })),
+  markers: [{ location: INDIA, size: active ? 0.05 : 0.04, id: 'india' }],
 })
 
 const focusAngles = ([lat, lng]: [number, number]) => ({
@@ -59,19 +37,15 @@ export default function GlobeScene() {
   const [failed, setFailed] = useState(false)
   const [node, setNode] = useState<ProjectId | null>(null)
   const [leaving, setLeaving] = useState(false)
-  const [anchors, setAnchors] = useState(false)
   const focusRef = useRef(false)
   const nodeRef = useRef<ProjectId | null>(null)
   const kickRef = useRef<() => void>(() => {})
+  const haloRef = useRef<HTMLDivElement>(null)
   nodeRef.current = node
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'start 40%'] })
   const enter = useTransform(scrollYProgress, [0, 1], [0, 1])
   const scale = useTransform(enter, [0, 1], [0.88, 1])
-
-  useEffect(() => {
-    setAnchors(typeof CSS !== 'undefined' && CSS.supports?.('position-anchor', '--a'))
-  }, [])
 
   useEffect(() => kickRef.current(), [node])
 
@@ -94,6 +68,21 @@ export default function GlobeScene() {
 
     let globe: Globe | null = null
     let size = 0
+    let anchor: HTMLElement | null = null
+
+    // COBE appends a 1px anchor div per marker id, positioned in percent of the canvas parent.
+    // Read India's position from it so the halo follows the marker in every browser.
+    const syncHalo = () => {
+      const halo = haloRef.current
+      if (!halo) return
+      if (!anchor || !anchor.isConnected) {
+        anchor = (Array.from(canvas.parentElement?.children ?? []) as HTMLElement[]).find(el => el !== canvas && el.style.cssText.includes('--cobe-india')) ?? null
+      }
+      if (anchor) {
+        halo.style.left = anchor.style.left
+        halo.style.top = anchor.style.top
+      }
+    }
     let raf = 0
     let visible = true
     let last = performance.now()
@@ -121,9 +110,6 @@ export default function GlobeScene() {
           markerColor: ON,
           glowColor: [0.05, 0.06, 0.04],
           markerElevation: 0.01,
-          arcColor: BASE,
-          arcWidth: 0.35,
-          arcHeight: 0.18,
           ...scene(nodeRef.current),
         })
       } catch {
@@ -152,6 +138,7 @@ export default function GlobeScene() {
       }
       s.sway = reduced ? 0 : Math.sin((now / 1000) * 0.18) * 0.18
       globe.update({ phi: s.phi + s.sway, theta: s.theta, ...scene(nodeRef.current) })
+      syncHalo()
 
       // Reduced motion: a static frame. Keep drawing only while something is changing.
       if (reduced) {
@@ -173,6 +160,7 @@ export default function GlobeScene() {
       const next = Math.round(e.contentRect.width)
       if (next > 0 && next !== size) {
         size = next
+        haloRef.current?.style.setProperty('--g', `${size}px`)
         create()
         start()
       }
@@ -320,21 +308,7 @@ export default function GlobeScene() {
                 style={{ cursor: 'grab', contain: 'layout paint size' }}
               />
             )}
-            {anchors && !failed && (
-              <>
-                <GlobeLabel anchor="--cobe-india" visible="--cobe-visible-india" text="INDIA" strong />
-                {projects.map(p => (
-                  <GlobeLabel
-                    key={p.id}
-                    anchor={`--cobe-node-${p.id}`}
-                    visible={`--cobe-visible-node-${p.id}`}
-                    text={p.id.toUpperCase()}
-                    strong={node === p.id}
-                    dim={!!node && node !== p.id}
-                  />
-                ))}
-              </>
-            )}
+            {!failed && <Halo ref={haloRef} active={node} reduced={reduced} />}
           </div>
         </motion.div>
 
@@ -350,7 +324,6 @@ export default function GlobeScene() {
                   onFocus={() => setNode(p.id)}
                   onBlur={() => setNode(null)}
                   onClick={() => select(p.id)}
-                  aria-label={`Open ${p.name}. ${p.category}. ${p.status}.`}
                   className="flex w-full items-baseline justify-between gap-4 bg-transparent py-4 text-left transition-opacity"
                   style={{ color: '#F4F1EA', opacity: node && node !== p.id ? 0.4 : 1, transitionDuration: '300ms' }}
                 >
@@ -389,40 +362,95 @@ export default function GlobeScene() {
   )
 }
 
-function GlobeLabel({
-  anchor,
-  visible,
-  text,
-  strong,
-  dim,
-}: {
-  anchor: string
-  visible: string
-  text: string
-  strong?: boolean
-  dim?: boolean
-}) {
+// Abstract relationship ring. Everything here is screen-space and attached to India's marker:
+// no project has a map coordinate, so nothing can read as a location, office or route.
+const NODE_LAYOUT: Record<ProjectId, { angle: number; label: React.CSSProperties }> = {
+  yamini: { angle: -90, label: { transform: 'translate(-50%, -165%)' } },
+  kavya: { angle: 150, label: { transform: 'translate(-100%, -50%)', marginLeft: -9 } },
+  uzhavan: { angle: 30, label: { transform: 'translate(0, -50%)', marginLeft: 9 } },
+}
+
+const Halo = forwardRef<HTMLDivElement, { active: ProjectId | null; reduced: boolean }>(function Halo({ active, reduced }, ref) {
+  const t = reduced ? 'none' : 'opacity 0.3s, background 0.3s, border-color 0.3s, color 0.3s'
   return (
-    <span
+    <div
+      ref={ref}
       aria-hidden="true"
+      className="pointer-events-none absolute"
       style={
         {
-          position: 'absolute',
-          positionAnchor: anchor,
-          bottom: 'anchor(top)',
-          left: 'anchor(center)',
-          transform: 'translate(-50%, -8px)',
-          opacity: `calc(var(${visible}, 0) * ${dim ? 0.25 : strong ? 1 : 0.7})`,
-          transition: 'opacity 0.3s',
-          pointerEvents: 'none',
-          fontFamily: 'var(--font-ibm-plex-mono), monospace',
-          fontSize: 10,
-          letterSpacing: '0.2em',
-          color: strong ? '#B8FF3D' : '#F4F1EA',
+          left: '50%',
+          top: '50%',
+          width: 0,
+          height: 0,
+          ['--R' as string]: 'clamp(46px, calc(var(--g, 520px) * 0.13), 86px)',
+          opacity: 'var(--cobe-visible-india, 0)',
+          transition: reduced ? 'none' : 'opacity 0.3s',
         } as React.CSSProperties
       }
     >
-      {text}
-    </span>
+      <div
+        className="absolute rounded-full"
+        style={{ left: 0, top: 0, width: 'calc(var(--R) * 2)', height: 'calc(var(--R) * 2)', transform: 'translate(-50%, -50%)', border: '1px dashed rgba(244,241,234,0.2)' }}
+      />
+      <span
+        className="absolute"
+        style={{ left: 0, top: 0, transform: 'translate(-50%, 16px)', fontFamily: 'var(--font-ibm-plex-mono), monospace', fontSize: 10, letterSpacing: '0.2em', color: '#F4F1EA' }}
+      >
+        INDIA
+      </span>
+      {projects.map(p => {
+        const { angle, label } = NODE_LAYOUT[p.id]
+        const rad = (angle * Math.PI) / 180
+        const on = active === p.id
+        const dim = !!active && !on
+        const lineColor = on ? '#B8FF3D' : 'rgba(244,241,234,0.42)'
+        return (
+          <div key={p.id} style={{ opacity: dim ? 0.28 : 1, transition: t }}>
+            <span
+              className="absolute"
+              style={{
+                left: 0,
+                top: 0,
+                width: 'calc(var(--R) - 5px)',
+                height: 1,
+                background: lineColor,
+                transformOrigin: '0 50%',
+                transform: `rotate(${angle}deg)`,
+                transition: t,
+              }}
+            />
+            <span
+              className="absolute rounded-full"
+              style={{
+                left: `calc(var(--R) * ${Math.cos(rad).toFixed(3)})`,
+                top: `calc(var(--R) * ${Math.sin(rad).toFixed(3)})`,
+                width: on ? 9 : 6,
+                height: on ? 9 : 6,
+                transform: 'translate(-50%, -50%)',
+                background: on ? '#B8FF3D' : '#050505',
+                border: `1px solid ${on ? '#B8FF3D' : 'rgba(244,241,234,0.7)'}`,
+                transition: t,
+              }}
+            />
+            <span
+              className="absolute whitespace-nowrap"
+              style={{
+                left: `calc(var(--R) * ${Math.cos(rad).toFixed(3)})`,
+                top: `calc(var(--R) * ${Math.sin(rad).toFixed(3)})`,
+                ...label,
+                fontFamily: 'var(--font-ibm-plex-mono), monospace',
+                fontSize: 10,
+                letterSpacing: '0.18em',
+                color: on ? '#B8FF3D' : 'rgba(244,241,234,0.82)',
+                transition: t,
+              }}
+            >
+              {p.id.toUpperCase()}
+            </span>
+          </div>
+        )
+      })}
+    </div>
   )
-}
+})

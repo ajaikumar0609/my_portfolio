@@ -85,7 +85,7 @@ export default function SystemFlow() {
           <li key={f}>{f}</li>
         ))}
       </ul>
-      <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.45)' }}>SOURCE · RESUME</p>
+      <p className="m-0 mt-2" style={{ ...mono, fontSize: 9, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.55)' }}>SOURCE · RESUME</p>
     </div>
   )
 }

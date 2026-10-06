@@ -10,6 +10,7 @@ const mono = { fontFamily: 'var(--font-ibm-plex-mono), monospace' } as const
 const sans = { fontFamily: 'var(--font-space-grotesk), sans-serif' } as const
 
 const EMAIL_ID = 'contact-email-text'
+const hostPath = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').toUpperCase()
 
 export default function ContactSection() {
   const reduced = useReduced()
@@ -44,8 +45,8 @@ export default function ContactSection() {
         <div className="min-w-0">
           <nav aria-label="Contact links">
             <ContactLink index="01" label="EMAIL" hint={person.email} hintId={EMAIL_ID} href={`mailto:${person.email}`} cursor="email" reduced={reduced} />
-            <ContactLink index="02" label="LINKEDIN" hint="LINKEDIN.COM/IN/AJAIKUMARN" href={person.linkedin} cursor="email" reduced={reduced} external />
-            <ContactLink index="03" label="GITHUB" hint="GITHUB.COM/AJAIKUMARN" href={person.github} cursor="github" reduced={reduced} external />
+            <ContactLink index="02" label="LINKEDIN" hint={hostPath(person.linkedin)} href={person.linkedin} cursor="email" reduced={reduced} external />
+            <ContactLink index="03" label="GITHUB" hint={hostPath(person.github)} href={person.github} cursor="github" reduced={reduced} external />
             <ContactLink index="04" label="RESUME" hint="PDF" href={person.resume} cursor="resume" reduced={reduced} external download />
             <div style={{ borderTop: '1px solid var(--border)' }} />
           </nav>
