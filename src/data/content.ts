@@ -15,7 +15,7 @@ export const person = {
   location: 'Tirunelveli, India',
   email: 'ajaikumar0609@gmail.com',
   github: 'https://github.com/ajaikumar0609',
-  linkedin: 'https://linkedin.com/in/ajaikumarn',
+  linkedin: 'https://www.linkedin.com/in/ajaikumar06',
   resume: '/Ajai-Kumar-N-Resume.pdf',
   photo: '/portrait/ajai-kumar.png',
 } as const
