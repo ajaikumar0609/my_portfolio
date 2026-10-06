@@ -76,7 +76,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       style={{ height: '100svh', minHeight: 620 }}
     >
       {/* Field */}
-      <motion.div className="absolute inset-0" style={reduced ? undefined : { opacity: fieldOpacity }}>
+      <motion.div className="absolute inset-0" style={{ opacity: reduced ? 1 : fieldOpacity }}>
         <ParticleField ready={ready} reduced={reduced} />
       </motion.div>
       <div
@@ -91,7 +91,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       {/* Layer 1: name, behind the subject */}
       <motion.div
         className="absolute left-[6vw] top-[11svh] z-10 md:left-[7vw]"
-        style={reduced ? undefined : { scale: nameScale, y: nameY, opacity: nameOpacity, transformOrigin: '0% 0%' }}
+        style={{ scale: reduced ? 1 : nameScale, y: reduced ? 0 : nameY, opacity: reduced ? 1 : nameOpacity, transformOrigin: '0% 0%' }}
       >
         <motion.h1
           variants={rise(0.15, 40)}
@@ -134,7 +134,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       {/* Layer 2: portrait, integrated into the composition */}
       <motion.div
         className="pointer-events-none absolute bottom-0 right-[-14vw] z-20 md:right-[8vw] lg:right-[16vw]"
-        style={reduced ? undefined : { opacity: portraitOpacity, y: portraitY }}
+        style={{ opacity: reduced ? 1 : portraitOpacity, y: reduced ? 0 : portraitY }}
       >
         <div ref={parallaxRef} style={{ willChange: 'transform' }}>
           <motion.div variants={rise(0.55, 36)} initial="out" animate={state} className="relative">
@@ -169,7 +169,7 @@ export default function Hero({ ready }: { ready: boolean }) {
       {/* Layer 3: positioning and statement */}
       <motion.div
         className="absolute bottom-[calc(max(14px,env(safe-area-inset-bottom))+84px)] left-[6vw] z-30 md:bottom-[7svh] md:left-[7vw]"
-        style={reduced ? undefined : { opacity: textOpacity }}
+        style={{ opacity: reduced ? 1 : textOpacity }}
       >
         <motion.div variants={rise(0.95, 18)} initial="out" animate={state}>
           <p

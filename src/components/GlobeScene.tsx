@@ -291,7 +291,7 @@ export default function GlobeScene() {
         <motion.div
           ref={boxRef}
           className="relative mx-auto aspect-square w-full max-w-[min(78vw,640px)] md:col-start-2 md:row-span-2 md:row-start-1 md:max-w-[640px]"
-          style={reduced ? undefined : { scale, opacity: enter }}
+          style={{ scale: reduced ? 1 : scale, opacity: reduced ? 1 : enter }}
         >
           <div
             className="absolute inset-0"

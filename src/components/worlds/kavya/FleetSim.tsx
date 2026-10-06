@@ -362,7 +362,7 @@ export default function FleetSim() {
                       <span
                         aria-hidden="true"
                         className="absolute h-4 w-4 rounded-full"
-                        style={{ border: '1px solid #4DE8FF', animation: reduced ? 'none' : 'kvPing 2.2s ease-out infinite', animationPlayState: anim }}
+                        style={{ border: '1px solid #4DE8FF', animationName: reduced ? 'none' : 'kvPing', animationDuration: '2.2s', animationTimingFunction: 'ease-out', animationIterationCount: 'infinite', animationPlayState: anim }}
                       />
                     )}
                     <span

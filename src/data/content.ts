@@ -69,7 +69,7 @@ export const projects: Project[] = [
     summary:
       'ERP for a business client covering workforce management, service operations and CRM, with GPS live tracking and attendance. MongoDB holds the GPS tracking data.',
     metrics: [
-      { value: '247+', label: 'FIELD EMPLOYEES', note: 'GPS tracking and attendance', source: 'doc' },
+      { value: '247+', label: 'FIELD EMPLOYEES', note: 'GPS tracking and attendance', source: 'owner' },
       {
         value: '178+',
         label: 'AUTOMATED TESTS',
@@ -123,7 +123,7 @@ export const projects: Project[] = [
 ]
 
 export const headlineMetrics: Metric[] = [
-  { value: '247+', label: 'FIELD EMPLOYEES', note: 'Yamini Infotech ERP', source: 'doc' },
+  { value: '247+', label: 'FIELD EMPLOYEES', note: 'Yamini Infotech ERP', source: 'owner' },
   { value: '3', label: 'MAJOR SYSTEMS', note: 'Yamini · Kavya · UZHAVAN', source: 'resume' },
   { value: '178+', label: 'AUTOMATED TESTS', note: 'Yamini: 13 unit + 165 regression', source: 'owner' },
 ]
@@ -134,7 +134,7 @@ export interface Experience {
   period: string
   org: string
   role: string
-  kind: 'EDUCATION' | 'INTERNSHIP'
+  kind: 'EDUCATION' | 'INTERNSHIP' | 'INDEPENDENT'
   bullets: string[]
   source: Source
 }
@@ -177,6 +177,20 @@ export const experience: Experience[] = [
     ],
     source: 'resume',
   },
+  {
+    id: 'independent',
+    year: 'NOW',
+    period: 'Jan 2024 – Present',
+    org: 'SELECTED ENGINEERING PROJECTS',
+    role: 'Independent Software Developer',
+    kind: 'INDEPENDENT',
+    bullets: [
+      'Yamini Infotech ERP · Dec 2025 – Jan 2026',
+      'Kavya Transports ERP · Jan 2026 – May 2026',
+      'UZHAVAN AI — Agricultural Decision-Support System',
+    ],
+    source: 'resume',
+  },
 ]
 
 export type StackCategory = 'LANGUAGES' | 'BACKEND' | 'DATA' | 'AI / ML' | 'CLOUD' | 'MOBILE & WEB' | 'TOOLS'
@@ -198,7 +212,7 @@ export const stack: Tech[] = [
   { name: 'FastAPI', category: 'BACKEND', usedIn: ['yamini', 'kavya', 'uzhavan'], source: 'resume' },
   { name: 'Spring Boot', category: 'BACKEND', usedIn: ['icanio'], source: 'resume' },
   { name: 'SQLAlchemy', category: 'BACKEND', usedIn: ['kavya'], source: 'resume' },
-  { name: 'REST APIs', category: 'BACKEND', usedIn: ['yamini', 'kavya', 'icanio'], source: 'resume' },
+  { name: 'REST APIs', category: 'BACKEND', usedIn: ['kavya', 'icanio'], source: 'resume' },
   { name: 'WebSockets', category: 'BACKEND', usedIn: ['kavya'], source: 'resume' },
   { name: 'PostgreSQL', category: 'DATA', usedIn: ['yamini', 'kavya', 'icanio'], source: 'resume' },
   { name: 'MongoDB', category: 'DATA', usedIn: ['yamini', 'kavya'], source: 'resume' },
@@ -207,10 +221,10 @@ export const stack: Tech[] = [
   { name: 'Pandas', category: 'DATA', usedIn: [], source: 'owner' },
   { name: 'NumPy', category: 'DATA', usedIn: [], source: 'owner' },
   { name: 'Machine Learning', category: 'AI / ML', usedIn: ['uzhavan'], source: 'resume' },
-  { name: 'Computer Vision', category: 'AI / ML', usedIn: ['uzhavan'], source: 'doc' },
-  { name: 'NLP', category: 'AI / ML', usedIn: ['uzhavan'], source: 'doc' },
-  { name: 'LLM Applications', category: 'AI / ML', usedIn: ['uzhavan'], source: 'doc' },
-  { name: 'Vertex AI', category: 'AI / ML', usedIn: ['uzhavan'], source: 'doc' },
+  { name: 'Computer Vision', category: 'AI / ML', usedIn: ['uzhavan'], source: 'owner' },
+  { name: 'NLP', category: 'AI / ML', usedIn: ['uzhavan'], source: 'owner' },
+  { name: 'LLM Applications', category: 'AI / ML', usedIn: ['uzhavan'], source: 'owner' },
+  { name: 'Vertex AI', category: 'AI / ML', usedIn: ['uzhavan'], source: 'owner' },
   { name: 'AWS', category: 'CLOUD', usedIn: [], source: 'owner' },
   { name: 'Google Cloud', category: 'CLOUD', usedIn: [], source: 'owner' },
   { name: 'Flutter', category: 'MOBILE & WEB', usedIn: ['yamini', 'kavya'], source: 'resume' },

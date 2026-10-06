@@ -5,14 +5,13 @@ import { markReady } from '@/lib/system'
 import dynamic from 'next/dynamic'
 import Loader from '@/components/Loader'
 import Hero from '@/components/Hero'
-import StatusStrip from '@/components/StatusStrip'
 import SelectedSystems from '@/components/SelectedSystems'
-import About from '@/components/About'
-import Contact from '@/components/Contact'
+import AboutSection from '@/components/AboutSection'
+import ExperienceSection from '@/components/ExperienceSection'
+import ContactSection from '@/components/ContactSection'
+import StackGraph from '@/components/StackGraph'
 
 const GlobeScene = dynamic(() => import('@/components/GlobeScene'), { ssr: false })
-const SkillsOrbit = dynamic(() => import('@/components/SkillsOrbit'), { ssr: false })
-const ExperienceTimeline = dynamic(() => import('@/components/ExperienceTimeline'), { ssr: false })
 
 export default function Home() {
   const [loaded, setLoaded] = useState(false)
@@ -30,12 +29,11 @@ export default function Home() {
         <main>
           <Hero ready={loaded} />
           <GlobeScene />
-          <StatusStrip />
           <SelectedSystems />
-          <SkillsOrbit />
-          <About />
-          <ExperienceTimeline />
-          <Contact />
+          <StackGraph />
+          <AboutSection />
+          <ExperienceSection />
+          <ContactSection />
         </main>
       </div>
 
