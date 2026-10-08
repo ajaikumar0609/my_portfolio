@@ -35,7 +35,7 @@ export default function ContactSection() {
             <span className="block">BUILD.</span>
           </h2>
           <p className="m-0 mt-5" style={{ ...mono, fontSize: 12, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.85)' }}>
-            AJAI KUMAR / AI ENGINEER / BACKEND / SYSTEMS
+            AJAI KUMAR / BACKEND / SOFTWARE ENGINEER · AI/ML
           </p>
           <p className="m-0 mt-2" style={{ ...mono, fontSize: 10, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.6)' }}>
             {person.meta}

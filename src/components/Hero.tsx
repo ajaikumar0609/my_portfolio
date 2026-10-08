@@ -12,7 +12,7 @@ import { ease } from '@/design/tokens'
 const mono = { fontFamily: 'var(--font-ibm-plex-mono), monospace' } as const
 const sans = { fontFamily: 'var(--font-space-grotesk), sans-serif' } as const
 
-const STATEMENT = ['I BUILD INTELLIGENT', 'SYSTEMS THAT OPERATE', 'IN THE REAL WORLD.']
+const STATEMENT = ['I BUILD BACKEND', 'SYSTEMS THAT OPERATE', 'IN THE REAL WORLD.']
 
 export default function Hero({ ready }: { ready: boolean }) {
   const reduced = useReduced()

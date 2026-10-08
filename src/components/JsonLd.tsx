@@ -12,7 +12,7 @@ export default function JsonLd() {
         name: person.name,
         url: SITE_URL,
         image: `${SITE_URL}/ajai-kumar.jpg`,
-        jobTitle: 'Software Engineer',
+        jobTitle: 'Backend / Software Engineer',
         description: SITE_DESCRIPTION,
         sameAs: [person.github, person.linkedin],
       },

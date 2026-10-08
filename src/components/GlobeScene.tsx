@@ -272,7 +272,7 @@ export default function GlobeScene() {
             <span style={{ color: '#B8FF3D' }}>●</span> INDIA · SYSTEM BASE
           </button>
           <p className="m-0 mt-2" style={{ ...mono, fontSize: 11, letterSpacing: '0.2em', color: 'rgba(244,241,234,0.55)' }}>
-            AI · BACKEND · SYSTEMS
+            BACKEND · AI/ML · SYSTEMS
           </p>
         </div>
 

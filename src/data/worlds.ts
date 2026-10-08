@@ -88,8 +88,8 @@ export const kavya = {
     },
     {
       key: 'SYSTEM',
-      text: 'A Python / FastAPI and SQLAlchemy backend with a React / TypeScript web client and a Flutter app. PostgreSQL holds fleet data, MongoDB holds GPS and log data, and WebSockets carry real-time updates. Redis is part of the stack.',
-      source: 'resume',
+      text: 'A Python / FastAPI backend with async SQLAlchemy, a React / TypeScript web client and a Flutter app. PostgreSQL holds fleet data, MongoDB holds GPS and log data, Redis handles caching, and Celery and APScheduler run background jobs. WebSockets carry real-time updates, access uses JWT with role-based permissions, documents go to AWS S3, and a pytest suite covers the backend.',
+      source: 'owner',
     },
     {
       key: 'SOLUTION',

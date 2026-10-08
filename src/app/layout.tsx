@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   authors: [{ name: "Ajai Kumar N", url: SITE_URL }],
   creator: "Ajai Kumar N",
-  keywords: ["Ajai Kumar", "AI Engineer", "Software Engineer", "Backend Developer", "FastAPI", "Python", "Flutter", "Applied AI"],
+  keywords: ["Ajai Kumar", "Backend Engineer", "Software Engineer", "Backend Developer", "Java", "Spring Boot", "Python", "FastAPI", "PostgreSQL", "REST APIs", "AI/ML"],
   alternates: { canonical: "/" },
   robots: { index: true, follow: true, googleBot: { index: true, follow: true, "max-image-preview": "large" } },
   openGraph: {

@@ -3,7 +3,7 @@ import { education, person } from '@/data/content'
 const mono = { fontFamily: 'var(--font-ibm-plex-mono), monospace' } as const
 const sans = { fontFamily: 'var(--font-space-grotesk), sans-serif' } as const
 
-const DISCIPLINES = ['AI', 'BACKEND', 'SYSTEMS', 'PRODUCT']
+const DISCIPLINES = ['BACKEND', 'SYSTEMS', 'AI/ML', 'PRODUCT']
 
 const row = (label: string, value: string) => (
   <div className="grid gap-1 py-4 md:grid-cols-[130px_1fr] md:gap-6" style={{ borderTop: '1px solid var(--border)' }}>
